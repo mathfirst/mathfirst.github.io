@@ -1,0 +1,14 @@
+permalink: /notes/:year/:month/:day/:title
+markdown: kramdown
+
+theme: jekyll-theme-cayman
+
+plugins:
+  - jekyll-feed
+  - jekyll-seo-tag
+  
+  
+title: Kaikai's website
+
+url: kaikaizhao.github.io
+
