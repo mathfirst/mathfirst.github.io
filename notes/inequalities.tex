@@ -1,0 +1,138 @@
+\documentclass{article}
+
+\usepackage[left=1.25in,top=1.25in,right=1.25in,bottom=1.25in,head=1.25in]{geometry}
+\usepackage{amsthm}
+\makeatletter
+\def\th@plain{%
+  \thm@notefont{}% same as heading font
+  \itshape % body font
+}
+\def\th@definition{%
+  \thm@notefont{}% same as heading font
+  \normalfont % body font
+}
+\makeatother
+\usepackage{amsmath,amssymb,mathtools}
+\usepackage{verbatim,float,url,enumerate}
+\usepackage{graphicx,subfigure,psfrag}
+\usepackage{natbib,xcolor}
+\usepackage{microtype,hyperref}
+\usepackage{breqn} %dealing with overlong displayed formulas. Syntax \begin{dmath*} \end{dmath*}; when you do not want < to break a line, you can use \hiderel{<} to avoid unnecessary line breaks.
+\usepackage[english]{babel}
+%Includes "References" in the table of contents
+\usepackage[nottoc]{tocbibind}
+\usepackage{lineno}
+\linenumbers
+\usepackage{hyperref}
+\hypersetup{
+    colorlinks=true, %set true if you want colored links
+    linktoc=all,     %set to all if you want both sections and subsections linked
+    linkcolor=blue,  %choose some color if you want links to stand out
+}
+%\modulolinenumbers[2]
+\newtheorem{thm}{Theorem}[section]
+\newtheorem{lemma}[thm]{Lemma}
+\newtheorem{definition}[thm]{Definition}
+
+\newtheorem{algorithm}{Algorithm}
+%\newtheorem{theorem}{Theorem}
+%\newtheorem{lemma}{Lemma}
+\newtheorem{corollary}[thm]{Corollary}
+\newtheorem{proposition}[thm]{Proposition}
+
+\theoremstyle{remark}
+\newtheorem{remark}[thm]{Remark}
+%\theoremstyle{definition}
+%\newtheorem{definition}{Definition}
+\newtheorem*{note}{Note}
+
+\newcommand\numberthis{\addtocounter{equation}{1}\tag{\theequation}}
+\newcommand{\argmin}{\mathop{\mathrm{argmin}}}
+\newcommand{\argmax}{\mathop{\mathrm{argmax}}}
+\newcommand{\minimize}{\mathop{\mathrm{minimize}}}
+\newcommand{\maximize}{\mathop{\mathrm{maximize}}}
+\newcommand{\st}{\mathop{\mathrm{subject\,\,to}}}
+\newenvironment{solution}{\paragraph{Solution:}}{\hfill$\square$}
+\newenvironment{example}{\paragraph{Example:}}{\hfill$\square$}
+
+\def\R{\mathbf{R}}
+\def\E{\mathbf{E}}
+\def\P{\mathbf{P}}
+\def\S{\mathbf{S}}
+\def\Cov{\mathrm{Cov}}
+\def\Var{\mathrm{Var}}
+\def\half{\frac{1}{2}}
+\def\sign{\mathrm{sign}}
+\def\supp{\mathrm{supp}}
+\def\th{\mathrm{th}}
+\def\tr{\mathrm{tr}}
+\def\dim{\mathrm{dim}}
+\def\dom{\mathbf{dom}}
+% For display equations in multiple pages in align
+\allowdisplaybreaks
+%\setlength\parindent{0pt}
+
+\begin{document}
+\title{Inequalities}
+\author{Kaikai Zhao\\
+Email: \href{mailto:kkai\_zhao@yeah.net}{kkai\_zhao@yeah.net}
+}
+
+\date{First draft: January 1, 2022\quad Last update: \today}
+\maketitle
+\tableofcontents
+
+\section{H\"{o}lder inequality}
+A classic result concerning $p$-norms is the \textbf{\textcolor[rgb]{1.00,0.00,0.00}{H\"{o}lder inequality in inner-product form}}:
+$$
+|x^T y|\le \|x\|_p\|y\|_q,\quad \frac{1}{p}+\frac{1}{q}=1.
+$$
+\begin{proof}
+Recall the definition of dual norm,
+$$
+\|x\|_p=\max_{\|z\|_q\le 1} x^Tz.
+$$
+Thus, $x^Tz\le \|x\|_p$ holds for any $z$ satisfying $\|z\|_q\le 1$, including $\|z\|_q= 1$. When $\|z\|_q= 1$, we have
+$$x^Tz\le \|x\|_p\|z\|_q$$
+Now let $z=ty$ with $t>0$. Thus, we have
+\begin{equation*}
+  x^T(ty)\le \|x\|_p\|ty\|_q \Longleftrightarrow x^Ty\le \|x\|_p\|y\|_q
+\end{equation*}
+where $\|y\|_q=\|z/t\|_q=1/t\|z\|_q=1/t>0$. This completes the proof.
+\end{proof}
+The key part of the above proof is using the dual representation of the $\ell_p$ norm, namely, $\|x\|_p=\max_{\|z\|_q\le 1} x^Tz$.
+
+\subsection{Cauchy-Schwarz inequality}
+A very important special case of H\"{o}lder inequality is \textcolor[rgb]{1.00,0.00,0.00}{\textbf{Cauchy-Schwarz inequality}}:
+$$
+|x^T y|\le \|x\|_2\|y\|_2.
+$$
+which can also be expressed as $(x^Ty)^2\le \|x\|_2^2\|y\|_2^2$. Here, $x=(x_1,x_2,\ldots,x_n)$ and $y=(y_1,y_2,\ldots,y_n)$. Thus,
+\begin{gather*}
+  (x_1y_1+x_2y_2+\ldots+x_ny_n)^2\le (x_1^2+x_2^2+\ldots+x_n^2)(y_1^2+y_2^2+\ldots+y_n^2) \\
+  (\sum_{i=1}^{n}x_iy_i)^2=\sum_{i=1}^{n}x_i^2\sum_{i=1}^{n}y_i^2
+\end{gather*}
+Let $y_i=\sqrt{b_i}$ and $x_i=\frac{a_i}{\sqrt{b_i}}$. We have an important \textbf{variant} of Cauchy-Schwarz inequality.
+\[
+(\sum_{i=1}^{n}\frac{a_i}{\sqrt{b_i}}\sqrt{b_i})^2=(\sum_{i=1}^{n}a_i)^2\le (\sum_{i=1}^{n}\frac{a_i^2}{b_i})\sum_{i=1}^{n}b_i\Longleftrightarrow \frac{(\sum_{i=1}^{n}a_i)^2}{\sum_{i=1}^{n}b_i}\le \sum_{i=1}^{n}\frac{a_i^2}{b_i}
+\]
+
+\section{Rearrangement inequalities}
+For two sequences $a_1\le a_2\le \cdots\le a_n$ and $b_1\le b_2\le \cdots\le b_n$ with reals $a_i$ and $b_i$, the following inequalities
+\[
+\underbrace{a_1b_n+a_2b_{n-1}+\cdots+a_nb_1}_{\text{reverse sum}}\le \underbrace{a_1b_{\pi(1)}+a_2b_{\pi(2)}+\cdots+a_nb_{\pi(n)}}_{\text{disordered sum}}\le \underbrace{a_1b_1+a_2b_2+\cdots+a_nb_n}_{\text{sequential sum}}
+\]
+hold, where $\pi(1),\pi(2),\ldots,\pi(n)$ is any permutation of $1,2,\ldots,n$. Simply speaking, \textbf{\textcolor[rgb]{1.00,0.00,0.00}{reverse sum $\le$ disordered sum $\le$ sequential sum}}.
+\begin{proof}\footnote{\url{https://brilliant.org/wiki/rearrangement-inequality/}}
+We want to prove that the identity permutation maximizes $a_1b_{\pi(1)}+a_2b_{\pi(2)}+\cdots+a_nb_{\pi(n)}$. Suppose for the sake of contradiction $\pi(i)$ is the smallest integer such that $\pi(i)\neq i$, then $\pi(i)=j(j>i)$ (since $1,\ldots,i-1$ have been assigned). Meanwhile, there exists a number $k>i$ such that $\pi(k)=i$ as some number must be assigned to $i$.
+
+Now, since $i<j$, it follows that $b_i\le b_j$. Likewise, since $i<k$, it follows that $a_i\le a_k$. Thus,
+\[
+(a_k-a_i)(b_j-b_i)\ge 0 \Longrightarrow a_kb_j + a_ib_i\ge a_ib_j + a_kb_i,
+\]
+which demonstrates that the sum $a_1b_{\pi(1)}+a_2b_{\pi(2)}+\cdots+a_nb_{\pi(n)}$ is not decreased by changing $\pi(j)=i$ and $\pi(k)=i$ to $\pi(i)=i$ and $\pi(k)=j$. This implies the identity permutation gives the maximum possible value of the sum $a_1b_{\pi(1)}+a_2b_{\pi(2)}+\cdots+a_nb_{\pi(n)}$, as desired. Moreover, the reverse identity permutation gives the minimum possible value of the sum $a_1b_{\pi(1)}+a_2b_{\pi(2)}+\cdots+a_nb_{\pi(n)}$.
+\end{proof}
+
+
+
+\end{document} 

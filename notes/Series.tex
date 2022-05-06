@@ -1,0 +1,239 @@
+\documentclass{article}
+
+\usepackage[left=1.25in,top=1.25in,right=1.25in,bottom=1.25in,head=1.25in]{geometry}
+\usepackage{amsthm}
+\makeatletter
+\def\th@plain{%
+  \thm@notefont{}% same as heading font
+  \itshape % body font
+}
+\def\th@definition{%
+  \thm@notefont{}% same as heading font
+  \normalfont % body font
+}
+\makeatother
+\usepackage{amsmath,amssymb,mathtools}
+\usepackage{verbatim,float,url,enumerate}
+\usepackage{graphicx,subfigure,psfrag}
+\usepackage{natbib,xcolor}
+\usepackage{microtype,hyperref}
+\usepackage{breqn} %dealing with overlong displayed formulas. Syntax \begin{dmath*} \end{dmath*}; when you do not want < to break a line, you can use \hiderel{<} to avoid unnecessary line breaks.
+\usepackage[english]{babel}
+%Includes "References" in the table of contents
+\usepackage[nottoc]{tocbibind}
+\usepackage{lineno}
+\linenumbers
+\usepackage{hyperref}
+\hypersetup{
+    colorlinks=true, %set true if you want colored links
+    linktoc=all,     %set to all if you want both sections and subsections linked
+    linkcolor=blue,  %choose some color if you want links to stand out
+}
+%\modulolinenumbers[2]
+\newtheorem{thm}{Theorem}[section]
+\newtheorem{lemma}[thm]{Lemma}
+\newtheorem{definition}[thm]{Definition}
+
+\newtheorem{algorithm}{Algorithm}
+%\newtheorem{theorem}{Theorem}
+%\newtheorem{lemma}{Lemma}
+\newtheorem{corollary}[thm]{Corollary}
+\newtheorem{proposition}[thm]{Proposition}
+
+\theoremstyle{remark}
+\newtheorem{remark}[thm]{Remark}
+%\theoremstyle{definition}
+%\newtheorem{definition}{Definition}
+\newtheorem*{note}{Note}
+
+\newcommand\numberthis{\addtocounter{equation}{1}\tag{\theequation}}
+\newcommand{\argmin}{\mathop{\mathrm{argmin}}}
+\newcommand{\argmax}{\mathop{\mathrm{argmax}}}
+\newcommand{\minimize}{\mathop{\mathrm{minimize}}}
+\newcommand{\maximize}{\mathop{\mathrm{maximize}}}
+\newcommand{\st}{\mathop{\mathrm{subject\,\,to}}}
+\newenvironment{solution}{\paragraph{Solution:}}{\hfill$\square$}
+\newenvironment{example}{\paragraph{Example:}}{\hfill$\square$}
+
+\def\R{\mathbf{R}}
+\def\E{\mathbf{E}}
+\def\P{\mathbf{P}}
+\def\S{\mathbf{S}}
+\def\Cov{\mathrm{Cov}}
+\def\Var{\mathrm{Var}}
+\def\half{\frac{1}{2}}
+\def\sign{\mathrm{sign}}
+\def\supp{\mathrm{supp}}
+\def\th{\mathrm{th}}
+\def\tr{\mathrm{tr}}
+\def\dim{\mathrm{dim}}
+\def\dom{\mathbf{dom}}
+% For display equations in multiple pages in align
+\allowdisplaybreaks
+%\setlength\parindent{0pt}
+
+\begin{document}
+\title{Series}
+\author{Kaikai Zhao\\
+Email: \href{mailto:kkai\_zhao@yeah.net}{kkai\_zhao@yeah.net}
+}
+
+\date{First draft: May 1, 2022\quad Last update: \today}
+\maketitle
+\tableofcontents
+\section{Notations}
+\[
+\binom{\alpha}{k}=\frac{\alpha(\alpha-1)(\alpha-2)\cdots(\alpha-k+1)}{k!}\quad (k=1,2,\cdots)
+\]
+\[
+\binom{\alpha}{0}=1
+\]
+where $\alpha$ is a nonzero real number. Note that in combinatorics $\alpha$ is usually a positive integer $n$, i.e., $\binom{n}{k}$ which is also denoted as $\mathrm{C}_n^k$ with $\mathrm{C}_n^0=1$. In this case, we have
+\[
+\mathrm{C}_n^k=\frac{n!}{k!(n-k)!}
+\]
+
+\section{Preliminaries}
+\subsection{Basic elementary functions}
+\subsection{Elementary functions}
+
+
+\section{Products of series}
+\subsection{Square product}
+
+\subsection{Cauchy product}
+
+\section{Alternating series (Leibniz series)}
+
+\section{Taylor expansions of some elementary functions}
+Note that when we are talking about Taylor expansion of $f(x)$ at $x_0$, we definitely have $f(x)=\sum_{n=0}^{\infty}\frac{f^{n}(x_0)}{n!} (x-x_0)^n$ on $O(x_0,\rho)(0<\rho\le r)$ where $r$ is the radius of convergence of Taylor series of $f(x)$. When $x$ is not in the region of convergence, the equality does not hold.
+\subsection{Taylor expansion of $(1+x)^{\alpha}$}
+When $\alpha\neq0$ and $\alpha\notin \mathbf{N}_+$,
+\[
+(1+x)^{\alpha}=\sum_{k=0}^{\infty}\binom{\alpha}{k}x^k, \begin{cases}
+                                                          x\in(-1,1), & \mbox{if } \alpha\le -1 \\
+                                                          x\in(-1,1], & \mbox{if } -1<\alpha<0 \\
+                                                          x\in[-1,1], & \mbox{if } \alpha>0.
+                                                        \end{cases}
+\]
+
+If $\alpha=0$, then $(1+x)^{0}=1$. When $\alpha\in \mathbf{N}_+$, say, $\alpha$ is a positive integer $n$, then
+\begin{dmath*}
+(1+x)^{n}=1+nx+\frac{n(n-1)}{2}x^2+\cdots+nx^{n-1}+x^n
+=\mathrm{C}_n^0\cdot 1^n\cdot x^0 + \mathrm{C}_n^1\cdot 1^{n-1}\cdot x^1+ \mathrm{C}_n^2\cdot 1^{n-2}\cdot x^2+\cdots+\mathrm{C}_n^{n-1}\cdot 1^{1}\cdot x^{n-1}+\mathrm{C}_n^{n}\cdot 1^{0}\cdot x^{n}
+=\sum_{k=0}^{n}\mathrm{C}_n^k \cdot 1^{n-k}\cdot x^k
+\end{dmath*}
+which is the well-known \textbf{binomial expansion formula}. When $\alpha=\frac{1}{2},-\frac{1}{2},-1$, their Taylor expansions are
+\begin{align*}
+\sqrt{1+x}&=1+\frac{1}{2}x-\frac{1}{2\cdot 4}x^2+\frac{1\cdot 3}{2\cdot 4\cdot 6}x^3-\frac{1\cdot 3\cdot 5}{2\cdot 4\cdot 6\cdot 8}x^3+\cdots\\
+&=1+\frac{1}{2}x+\sum_{n=2}^{\infty}(-1)^{n-1}\frac{(2n-3)!!}{(2n)!!}x^n,\quad (-1\le x\le 1)\\
+\frac{1}{\sqrt{1+x}}&=1-\frac{1}{2}x+\frac{1\cdot 3}{2\cdot 4}x^2-\frac{1\cdot 3\cdot 5}{2\cdot 4\cdot 6}x^3+\frac{1\cdot 3\cdot 5\cdot 7}{2\cdot 4\cdot 6\cdot 8}x^4-\cdots\\
+&=1+\sum_{n=1}^{\infty}(-1)^{n}\frac{(2n-1)!!}{(2n)!!}x^n,\quad (-1 < x\le 1)\\
+\frac{1}{1+x}&=1-x+x^2-x^3+\cdots\\
+&=\sum_{n=0}^{\infty}(-1)^{n}x^n,\quad (-1< x< 1)\\
+\frac{1}{1-x}&=1+x+x^2+x^3+\cdots\\
+&=\sum_{n=0}^{\infty}x^n,\quad (-1< x< 1)
+\end{align*}
+where the last one is obtained by substituting $-x$ for $x$ into the third one. The last one is exactly the geometric series formula.
+
+We may need the following fact when we explore the convergence region of this series.
+\[
+\binom{\alpha}{k+1}/\binom{\alpha}{k}=\frac{\alpha(\alpha-1)(\alpha-2)\cdots(\alpha-k)}{(k+1)!}\cdot\frac{k!}{\alpha(\alpha-1)(\alpha-2)\cdots(\alpha-k+1)}=\frac{\alpha-k}{k+1} 
+\]
+
+\subsection{Applications of the Taylor expansion of $(1+x)^{\alpha}$}
+We can make use of the Taylor expansion of $(1+x)^{\alpha}$ to obtain the Taylor expansions of other functions. For example,
+\subsubsection{Taylor expansions of $\frac{1}{\sqrt{1-x^2}}$ and $\arcsin x$}
+Substituting $-x^2$ into the Taylor expansion of $\frac{1}{\sqrt{1+x}}$ for $x$ gives
+\begin{align*}
+  \frac{1}{\sqrt{1-x^2}} &=1-\frac{1}{2}(-x^2)+\frac{1\cdot 3}{2\cdot 4}(-x^2)^2-\frac{1\cdot 3\cdot 5}{2\cdot 4\cdot 6}(-x^2)^3+\frac{1\cdot 3\cdot 5\cdot 7}{2\cdot 4\cdot 6\cdot 8}(-x^2)^3-\cdots\\
+  &=1+\frac{1}{2}x^2+\frac{1\cdot 3}{2\cdot 4}x^4+\frac{1\cdot 3\cdot 5}{2\cdot 4\cdot 6}x^6+\frac{1\cdot 3\cdot 5\cdot 7}{2\cdot 4\cdot 6\cdot 8}x^8+\cdots\\
+&=1+\sum_{n=1}^{\infty}\frac{(2n-1)!!}{(2n)!!}x^{2n},\quad (-1< x< 1)
+\end{align*}
+where the convergence region follows from the fact that when $x=\pm1$, $-x^2=-1$, i.e., $-1<-x^2\le1$ is violated, which implies $1+\sum_{n=1}^{\infty}\frac{(2n-1)!!}{(2n)!!}x^{2n}$ diverges at $x=\pm1$. Here, $(-1,1]$ is the convergence region of the Taylor expansion of $\frac{1}{\sqrt{1+x}}$. Also, we can use Raabe's test for convergence of a series. Specifically, when $x=\pm1$, we have $1+\sum_{n=1}^{\infty}\frac{(2n-1)!!}{(2n)!!}$. Then
+\[
+\lim_{n\to\infty} n\left(\frac{x_n}{x_{n+1}}-1 \right)=\lim_{n\to\infty} n\left(\frac{(2n-1)!!}{(2n)!!}\cdot\frac{(2n+2)!!}{(2n+1)!!}-1\right)
+=\lim_{n\to\infty} n\left(\frac{2n+2}{2n+1}-1\right)=\lim_{n\to\infty}\frac{n}{2n+1}=\frac{1}{2}<1.
+\]
+so this series diverges at $x=\pm1$. Now we compute the Taylor expansion of $\arcsin x$ from the Taylor expansion of $\frac{1}{\sqrt{1-x^2}}$. 
+\begin{align*}
+  \arcsin x=\arcsin x-\arcsin 0=\int_{0}^{x}\frac{1}{\sqrt{1-t^2}}\mathrm{d}t &=\int_{0}^{x} (1+\sum_{n=1}^{\infty}\frac{(2n-1)!!}{(2n)!!}t^{2n})\mathrm{d}t \\
+  &=x+\sum_{n=1}^{\infty}\frac{(2n-1)!!}{(2n)!!}\int_{0}^{x}t^{2n}\mathrm{d}t \\
+  &=x+\sum_{n=1}^{\infty}\frac{(2n-1)!!}{(2n)!!}\frac{x^{2n+1}}{2n+1},\quad (-1\le x\le 1)\\
+  &=x+\frac{1}{2\cdot 3}x^3+\frac{1\cdot 3}{2\cdot 4\cdot5}x^5+\frac{1\cdot 3\cdot 5}{2\cdot 4\cdot 6\cdot7}x^7+\cdots,\quad (-1\le x\le 1)
+\end{align*}
+where the convergence region follows from Raabe's test. When $x=\pm1$, we have $x+\sum_{n=1}^{\infty}\frac{(2n-1)!!}{(2n)!!(2n+1)}$.
+\begin{align*}
+\lim_{n\to\infty} n\left(\frac{x_n}{x_{n+1}}-1 \right)&=\lim_{n\to\infty} n\left(\frac{(2n-1)!!}{(2n)!!(2n+1)}\cdot\frac{(2n+2)!!(2n+3)}{(2n+1)!!}-1\right)\\
+&=\lim_{n\to\infty} n\left(\frac{(2n+2)(2n+3)}{(2n+1)^2}-1\right)=\lim_{n\to\infty}\frac{n(6n+5)}{(2n+1)^2}=\frac{3}{2}>1.
+\end{align*}
+so this series converges at $x=\pm1$.
+
+Let $x=1$, then
+\[
+\frac{\pi}{2}=1+\sum_{n=1}^{\infty}\frac{(2n-1)!!}{(2n)!!(2n+1)},
+\]
+which can be used to estimate the value of $\pi$.
+
+
+
+\subsubsection{Taylor expansions of $\frac{1}{1+x^2}$ and $\arctan x$}
+\begin{align*}
+\frac{1}{1+x^2}&=1-x^2+(x^2)^2-(x^2)^3+\cdots\\
+&=1-x^2+x^4-x^6+\cdots\\
+&=\sum_{n=0}^{\infty}(-1)^{n}x^{2n},\quad (-1< x< 1)
+\end{align*}
+which follows from the Taylor expansion of $1/(1+x)$. Furthermore, we can get the Taylor expansion of $\arctan x$
+\begin{align*}
+  \arctan x=\arctan x-\arctan 0&= \int_{0}^{x}\frac{1}{1+t^2}\mathrm{d}t
+  =\int_{0}^{x} \sum_{n=0}^{\infty}(-1)^{n}t^{2n}\mathrm{d}t \\
+  &=(-1)^{n} \sum_{n=0}^{\infty}\int_{0}^{x}t^{2n}\mathrm{d}t
+  = \sum_{n=0}^{\infty}(-1)^{n}\frac{x^{2n+1}}{2n+1},\quad (-1\le x\le 1)\\
+  &=x-\frac{x^3}{3}+\frac{x^5}{5}-\frac{x^7}{7}+\cdots,\quad (-1\le x\le 1)
+\end{align*}
+In this example, integration expands the convergence region with two endpoints. Normally, this kind of expansion is only to include one or two boundary points.
+
+When $x=1$, we have
+\[
+\frac{\pi}{4}=1-\frac{1}{3}+\frac{1}{5}-\frac{1}{7}+\cdots
+\]
+which can be used to estimate the value of $\pi$.
+
+\subsubsection{Taylor expansions of $\ln(1+x)$ and $\ln\frac{1}{x+1}$}
+Let $f(x)=\ln(1+x)$, then $f'(x)=1/(1+x)$. Since $\sum_{n=0}^{\infty}(-1)^{n}x^n$ converges with $x\in(-1,1)$, then
+\begin{align*}
+ \ln(1+x)=\ln(1+x)-\ln(1+0) &=\int_{0}^{x}\frac{1}{t+1}\mathrm{d} t
+ =\int_{0}^{x}\sum_{n=0}^{\infty}(-1)^{n}t^n\mathrm{d} t \\
+  &=\sum_{n=0}^{\infty}\int_{0}^{x}(-1)^{n}t^n\mathrm{d} t
+  =\sum_{n=0}^{\infty}\frac{(-1)^{n}}{n+1}x^{n+1}\\
+  &=\sum_{n=1}^{\infty}\frac{(-1)^{n+1}}{n}x^{n},\quad (-1< x\le 1)\\
+  &=x-\frac{x^2}{2}+\frac{x^3}{3}-\frac{x^4}{4}+\cdots,\quad (-1< x\le 1)
+\end{align*}
+with 1 inclusive. Notice that integration expands the convergence region by making one endpoint inclusive. When $x=1$, we get
+\[
+\ln 2=1-\frac{1}{2}+\frac{1}{3}-\frac{1}{4}+\cdots+(-1)^{n}\frac{1}{n+1}+\cdots
+\]
+Also, it is easy to get
+\begin{align*}
+\ln\frac{1}{x+1}=-\ln(1+x)&=-\sum_{n=1}^{\infty}\frac{(-1)^{n+1}}{n}x^{n}
+=\sum_{n=1}^{\infty}\frac{(-1)^{n}}{n}x^{n},\quad (-1< x\le 1)\\
+&=-x+\frac{x^2}{2}-\frac{x^3}{3}+\frac{x^4}{4}-\cdots,\quad (-1< x\le 1)
+\end{align*}
+
+\subsubsection{Taylor expansions of $\ln(1-x)$ and $\ln\frac{1}{1-x}$}
+Substituting $-x$ into the Taylor expansion of $\ln(1+x)$ for $x$ yields,
+\begin{align*}
+  \ln(1-x) &=\sum_{n=0}^{\infty}\frac{(-1)^{n}}{n+1}(-x)^{n+1},\quad (-1< -x\le 1) \\
+  &=\sum_{n=0}^{\infty}\frac{(-1)^{n}}{n+1}(-1)^{n+1}x^{n+1},\quad (-1\le x< 1)  \\
+  &=-\sum_{n=0}^{\infty}\frac{1}{n+1}x^{n+1}
+  =-\sum_{n=1}^{\infty}\frac{1}{n}x^{n},\quad (-1\le x< 1)
+\end{align*}
+By this, we can get
+\[
+\ln\frac{1}{1-x}=-\ln(1-x)=\sum_{n=1}^{\infty}\frac{1}{n}x^{n},\quad (-1\le x< 1)
+\]
+
+\bibliographystyle{apalike}%plain
+\bibliography{mybib}
+
+\end{document}
