@@ -1,0 +1,621 @@
+\documentclass{article}
+
+\usepackage[left=1.25in,top=1.25in,right=1.25in,bottom=1.25in,head=1.25in]{geometry}
+\usepackage{amsthm}
+\makeatletter
+\def\th@plain{%
+  \thm@notefont{}% same as heading font
+  \itshape % body font
+}
+\def\th@definition{%
+  \thm@notefont{}% same as heading font
+  \normalfont % body font
+}
+\makeatother
+\usepackage{amsmath,amssymb,mathtools}
+\usepackage{verbatim,float,url,enumerate}
+\usepackage{graphicx,subfigure,psfrag}
+\usepackage{natbib,xcolor}
+\usepackage{microtype,hyperref}
+\usepackage{breqn} %dealing with overlong displayed formulas. Syntax \begin{dmath*} \end{dmath*}; when you do not want < to break a line, you can use \hiderel{<} to avoid unnecessary line breaks.
+\usepackage[english]{babel}
+%Includes "References" in the table of contents
+\usepackage[nottoc]{tocbibind}
+\usepackage{lineno}
+\linenumbers
+\usepackage{hyperref}
+\hypersetup{
+    colorlinks=true, %set true if you want colored links
+    linktoc=all,     %set to all if you want both sections and subsections linked
+    linkcolor=blue,  %choose some color if you want links to stand out
+}
+%\modulolinenumbers[2]
+\newtheorem{thm}{Theorem}[section]
+\newtheorem{lemma}[thm]{Lemma}
+\newtheorem{definition}[thm]{Definition}
+
+\newtheorem{algorithm}{Algorithm}
+%\newtheorem{theorem}{Theorem}
+%\newtheorem{lemma}{Lemma}
+\newtheorem{corollary}[thm]{Corollary}
+\newtheorem{proposition}[thm]{Proposition}
+
+\theoremstyle{remark}
+\newtheorem{remark}[thm]{Remark}
+%\theoremstyle{definition}
+%\newtheorem{definition}{Definition}
+\newtheorem*{note}{Note}
+
+\newcommand\numberthis{\addtocounter{equation}{1}\tag{\theequation}}
+\newcommand{\argmin}{\mathop{\mathrm{argmin}}}
+\newcommand{\argmax}{\mathop{\mathrm{argmax}}}
+\newcommand{\minimize}{\mathop{\mathrm{minimize}}}
+\newcommand{\maximize}{\mathop{\mathrm{maximize}}}
+\newcommand{\st}{\mathop{\mathrm{subject\,\,to}}}
+\newenvironment{solution}{\paragraph{Solution:}}{\hfill$\square$}
+\newenvironment{example}{\paragraph{Example:}}{\hfill$\square$}
+
+\def\R{\mathbf{R}}
+\def\E{\mathbf{E}}
+\def\P{\mathbf{P}}
+\def\S{\mathbf{S}}
+\def\Cov{\mathrm{Cov}}
+\def\Var{\mathrm{Var}}
+\def\half{\frac{1}{2}}
+\def\sign{\mathrm{sign}}
+\def\supp{\mathrm{supp}}
+\def\th{\mathrm{th}}
+\def\tr{\mathrm{tr}}
+\def\dim{\mathrm{dim}}
+\def\dom{\mathbf{dom}}
+% For display equations in multiple pages in align
+\allowdisplaybreaks
+%\setlength\parindent{0pt}
+
+\begin{document}
+\title{Notes on Distributed Optimization and Statistical Learning via ADMM}
+\author{Kaikai Zhao\\
+Email: \href{mailto:kkai\_zhao@yeah.net}{kkai\_zhao@yeah.net}
+}
+
+\date{First draft: April 1, 2022\quad Last update: \today}
+\maketitle
+
+This document is about my reading notes on the review paper \cite{Boyd2011DistributedOA}. In this document, I give the full derivations for the results presented in that paper which are not very straightforward from my viewpoint. Also, I record some possible typos therein. Hopefully, these notes are helpful for your research. By the way, please contact me via email if you find my understandings are incorrect, which is very important for me. Thanks in advance.
+
+\bibliographystyle{apalike}%plain
+\bibliography{mybib}
+
+\tableofcontents
+
+
+\section{Dual decomposition}
+In section 2.2, the Lagrangian can be written as
+\begin{dmath*}
+L(x,y)=f(x)+y^T(Ax-b)
+=\sum_{i=1}^{N}f_i(x_i)+y^T(\sum_{i=1}^{N}A_ix_i-b)
+=\sum_{i=1}^{N}f_i(x_i)+y^T\left(\sum_{i=1}^{N}(A_ix_i-\frac{1}{N} b)\right)
+=\sum_{i=1}^{N}f_i(x_i)+\sum_{i=1}^{N}(y^TA_ix_i-\frac{1}{N} y^Tb)
+=\sum_{i=1}^{N}\left(f_i(x_i)+y^TA_ix_i-\frac{1}{N} y^Tb\right)
+\end{dmath*}
+where the second and the third equalities follow from $Ax=\sum_{i=1}^{N}A_ix_i$ and $b=\sum_{i=1}^{N}\frac{1}{N}b$, respectively. Thus, the Lagrangian is also separable in $x$.
+
+\section{Appendix}
+\subsection{A.1-how to show a sequence does not converge to a point}
+By the definition of convergence for a sequence, a sequence $\{x_n\}$ of real numbers is convergent if and only if, for a real number $a$ and every real $\epsilon > 0$, there exists an $N >0$ such that $|x_n-a|\le \epsilon$ for all $n \ge N$. The following is the so-called $\epsilon$-$\delta$ language.
+\[
+\lim_{n\to \infty} x_n=a \Leftrightarrow \forall \epsilon>0, \exists N, \forall n>N: |x_n-a|\le\epsilon.
+\]
+If we want to show $\lim_{n\to \infty} x_n\neq a$, we only need to get its contrapositive, i.e.,
+\[
+\lim_{n\to \infty} x_n\neq a \Leftrightarrow \exists \epsilon>0, \forall N, \exists n>N: |x_n-a|>\epsilon.
+\]
+
+In the appendix, iterating Eq. (A.1) yields
+\begin{equation}\label{distr-admm-iter-A.1}
+\rho \sum_{k=0}^{\infty}\left( \|r^{k+1}\|_2^2 + \|B(z^{k+1}-z^{k})\|_2^2 \right)\le V^{0},
+\end{equation}
+which implies that $r^{k}\to 0$ and $B(z^{k+1}-z^{k})\to 0$ as $k\to \infty$.
+
+To show $r^{k}\to 0$, we can suppose $r^{k}\nrightarrow 0$, then there exists $\epsilon_0>0$ and $n>N$ for every $N$ such that $\|r^{n}- 0\|_2^2=\|r^{n}\|_2>\epsilon_0$. Let $\epsilon_0=\frac{V^0}{m\rho}$. Since for every $N$ there exists an $n>N$ such that $\|r^{n}\|_2^2>\epsilon_0$, then we can find a sequence $\{n_i|1<n_1<n_2<\cdots<n_p\}$ such that $\|r^{n_i}\|_2^2>\epsilon_0$. Thus, if $p\ge m$, we have
+\[
+\rho \sum_{k=n_1}^{n_p} \|r^{k}\|_2^2>\rho\cdot p \frac{V^0}{m\rho}=\frac{p}{m}V^0 > V^{0}
+\]
+which contradicts \eqref{distr-admm-iter-A.1}. Thus, the supposition does not hold. Hence, $r^{k}\to 0$ as $k\to \infty$. Similarly, $B(z^{k+1}-z^{k})\to 0$ can be shown in the same fashion.
+
+\subsection{A typo at p. 107}
+In the paragraph preceding Proof of inequality (A.3), we simply observe that
+\begin{dmath*}
+-r^{k+1}+B(z^{k+1}-z^*)=-(Ax^{k+1}+Bz^{k+1}-c)+B(z^{k+1}-z^*)
+=-Ax^{k+1}+c-Bz^*
+=-Ax^{k+1}+Ax^*
+=-A(x^{k+1}-x^*)
+\end{dmath*}
+where the third equality follows from the fact that $Ax^*+Bz^*=c$. The typo is in the first line, i.e., $z^*$ instead of $z^k$ in their article.
+
+\subsection{Proof of inequality (A.2)}
+Here, we expand the statement ``A similar argument shows that $z^{k+1}$ minimizes $g(z)+y^{(k+1)T}Bz$.''.
+
+By definition, $z^{k+1}$ minimizes $L_{\rho}(x^{k+1},z,y^k)$. Since $g$ is closed, proper, and convex it is subdifferentiable, and so is $L_{\rho}$ w.r.t. $z$. The (necessary and sufficient) optimality condition is
+\[
+0\in \partial L_{\rho}(x^{k+1},z^{k+1},y^k)=\partial g(z^{k+1})+B^Ty^k+\rho B^T(Ax^{k+1}+Bz^{k+1}-c)
+\]
+
+Plugging in $y^k=y^{k+1}-\rho r^{k+1}$ and $r^{k+1}=Ax^{k+1}+Bz^{k+1}-c$, and rearranging to obtain
+\begin{dmath*}
+0\in\partial g(z^{k+1})+B^T(y^{k+1}-\rho r^{k+1})+\rho B^Tr^{k+1}
+\in \partial g(z^{k+1})+B^Ty^{k+1}
+\end{dmath*}
+which implies that $z^{k+1}$ minimizes
+\[
+g(z)+y^{(k+1)T}Bz
+\]
+
+\section{Chapter 4}
+\subsection{Introduction}
+We express the x-update step as
+\[
+x^+=\argmin_x (f(x)+\frac{\rho}{2}\|Ax-v\|_2^2),
+\]
+where $v=-Bz+c-u$. The x-update step is exactly Definition (3.5).
+
+\section{Chapter 5}
+For the following problem
+\begin{equation}\label{ADMM-standard}
+\begin{array}{ll}
+\operatorname{minimize}_{x\in\R^n,z\in\R^m}& f(x) + g(z)\\
+\st & Ax+Bz=c
+\end{array}
+\end{equation}
+whose Lagrangian is
+\begin{equation}\label{ADMM-Lagrangian}
+L(x,z,y)=f(x) + g(z) + y^T(Ax+Bz-c)
+\end{equation}
+By the necessary and sufficient conditions for this ADMM problem \eqref{ADMM-standard}, we have the dual feasibility
+\begin{align}
+&0\in \partial f(x^*) + A^Ty^* \label{dual-feasibility-f-x} \\
+&0\in \partial g(z^*) + B^Tz^* \label{dual-feasibility-g-z}
+\end{align}
+The augmented Lagrangian is
+\begin{equation}\label{ADMM-augmented-Lagrangian}
+L_{\rho}(x,z,y)=f(x) + g(z) + y^T(Ax+Bz-c) + \frac{\rho}{2}\|Ax+Bz-c\|_2^2
+\end{equation}
+ADMM consists of the iterations
+\begin{align*}
+  x^{k+1} &:=\argmin_x L_{\rho}(x,z^k,y^k) \\
+  z^{k+1} &:=\argmin_z L_{\rho}(x^{k+1},z,y^k) \\
+  y^{k+1} &:=y^k+\rho(Ax^{k+1}+Bz^{k+1}-c)
+\end{align*}
+Since $x^{k+1}$ minimizes $L_{\rho}(x,z,y)$, we have that
+\begin{align*}
+  0 &\in\partial f(x^{k+1}) + A^Ty^k + \rho A^T(Ax^{k+1}+Bz^k-c) \\
+   &\in\partial f(x^{k+1})+ A^Ty^{k+1}-A^Ty^{k+1} + A^Ty^k + \rho A^T(Ax^{k+1}+Bz^k-c) \\
+  & \in\partial f(x^{k+1})+ A^Ty^{k+1}-A^T(y^k+\rho (Ax^{k+1}+Bz^{k+1}-c)) + A^Ty^k + \rho A^T(Ax^{k+1}+Bz^k-c) \\
+  & \in\partial f(x^{k+1})+ A^Ty^{k+1}-\rho A^T(Ax^{k+1}+Bz^{k+1}-c) + \rho A^T(Ax^{k+1}+Bz^k-c) \\
+  & \in\partial f(x^{k+1})+ A^Ty^{k+1}+\rho A^TB(z^k-z^{k+1})\\
+\end{align*}
+or equivalently,
+\begin{equation}\label{ADMM-dual-residual}
+\rho A^TB(z^{k+1}-z^k)\in\partial f(x^{k+1})+ A^Ty^{k+1}
+\end{equation}
+Comparing \eqref{ADMM-dual-residual} with \eqref{dual-feasibility-f-x}, we can view the quantity
+\begin{equation}\label{ADMM-dual-residual-quantity}
+s^{k+1}=\rho A^TB(z^{k+1}-z^k)
+\end{equation}
+as the dual residual for the dual feasibility condition \eqref{ADMM-dual-residual}.
+
+\subsection{Dual residual}
+In Sec. 3.3, the dual residual can be viewed as
+\[
+s^{k}=\rho A^TB(z^k-z^{k-1})
+\]
+where $A$ and $B$ are from the constraint $Ax+Bz=c$. When the constraint is $x-z=0$, at the end of the Introduction of Chapter 5, the dual residual takes the simple form
+\[
+s^{k}=-\rho (z^k-z^{k-1})
+\]
+where $A$ and $B$ are $I$ and $-I$, respectively.
+
+\subsection{Simplification of ADMM in 5.1.2}
+There is a serious typo in this subsection, i.e., the last term is supposed to be $z^k$ instead of $z^{k+1}$. Taking the average (over $i$) of $u_i^{k+1}:=u_i^k + x_i^{k+1}-z^{k+1}$ we obtain
+\[
+\bar{u}^{k+1}=\bar{u}^k + \bar{x}^{k+1}-z^{k+1},
+\]
+combined with $z^{k+1}=\bar{x}^{k+1}+\bar{u}^k$ (from the second equation) we get that $\bar{u}^{k+1}$. So after the ``globally'' first step, $\bar{u}^{k}=0$ always holds. Thus, $z^{k+1}$ reduces to $\bar{x}^{k+1}$, since $z^{k+1}=\bar{x}^{k+1}+\bar{u}^k$. Then in the next iteration $z^k=\bar{x}^k$. Hence, the first equation can be written as
+\[
+x_i^{k+1}:=\Pi_{\mathcal{A}_i}(\bar{x}^k-u_i^k)
+\]
+The second equation can be removed since $z^{k+1}=\bar{x}^{k+1}$. Finally, the third equation can be rewritten as
+\[
+u_i^{k+1}:=u_i^{k}+x_i^{k+1}-\bar{x}^{k+1}.
+\]
+
+\section{Chapter 7}
+\subsection{Dual residual - Section 7.1 (p. 51)}
+In section 7.1, by the dual quantity formula \eqref{ADMM-dual-residual-quantity} and the result $z^k=\overline{x}^k$ (see p. 50), we get that
+\[
+s^k=-\rho(\overline{x}^k-\overline{x}^{k-1},\ldots,\overline{x}^k-\overline{x}^{k-1}),
+\]
+where the ``$-$'' before $\rho$ follows from the fact that $A=I$ and $B=-I$ since the constraint $x_i-z=0$.
+
+\subsection{Solving Eq. (7.4) - Section 7.1.1 (p. 52)}\label{global-consensus-analysis-g-z-y}
+To solve Eq. (7.4), we need to do the following derivations.
+\begin{dmath*}
+z^{k+1}=\argmin_z\left(g(z)+\sum_{i=1}^{N}(-y_i^{kT}z+\frac{\rho}{2}\|x_i^{k+1}-z\|_2^2)\right)
+%=\argmin_z\left(g(z)+\sum_{i=1}^{N}-y_i^{kT}z+\sum_{i=1}^{N}\frac{\rho}{2}\|x_i^{k+1}-z\|_2^2\right)
+=\argmin_z\left(g(z)-N\overline{y}^{kT}z+\sum_{i=1}^{N}\frac{\rho}{2}(\|z\|_2^2-\rho z^Tx_i^{k+1})\right)
+=\argmin_z\left(g(z)-Nz^T\overline{y}^{k}+\frac{N\rho}{2}\|z\|_2^2-N\rho z^T\overline{x}^{k+1}\right)
+=\argmin_z\left(g(z)+\frac{N\rho}{2}\|z\|_2^2-N\rho z^T(\overline{x}^{k+1}+\frac{1}{\rho}\overline{y}^{k})\right)
+=\argmin_z\left(g(z)+\frac{N\rho}{2}(\|z\|_2^2- 2z^T(\overline{x}^{k+1}+\frac{1}{\rho}\overline{y}^{k}))\right)
+=\argmin_z\left(g(z)+\frac{N\rho}{2}\|z-(\overline{x}^{k+1}+\frac{1}{\rho}\overline{y}^{k})\|_2^2\right)
+=\operatorname{prox}_{g,\frac{1}{N\rho}}(\overline{x}^{k+1}+\frac{1}{\rho}\overline{y}^{k})
+\end{dmath*}
+where the second last equation is exactly the same as the fourth equation on page 52. For $g(z)=\lambda \|z\|_1$ with $\lambda>0$,
+the $z$-update is a soft threshold operation:
+\begin{equation*}
+z^{k+1}=S_{\lambda/N\rho}(\overline{x}^{k+1}+\frac{1}{\rho}\overline{y}^{k})
+\end{equation*}
+where $S_{\lambda}(\cdot)$ is defined as follows.
+\begin{equation*}
+[S_{\lambda}(u)]_j=\begin{cases}
+                     u_j-\lambda, & \mbox{if } u_j>\lambda \\
+                     0, & \mbox{if } u_j\le \lambda \\
+                     u_j+\lambda, & \mbox{if } u_j<-\lambda.
+                   \end{cases}
+\end{equation*}
+
+On page 52, it reads ``in the case with nonzero $g(z)$, we do not in general have $\overline{y}^k=0$, so we cannot drop the $y_i$ terms from $z$-update as in consensus ADMM.''.
+$$
+\begin{aligned}
+&\begin{array}{l}
+z^{k+1}=\begin{cases}
+                     \overline{x}^{k+1}+\frac{1}{\rho}\overline{y}^{k}-\frac{\lambda}{N\rho}, & \mbox{if } \overline{x}^{k+1}+\frac{1}{\rho}\overline{y}^{k}\succ\frac{\lambda}{N\rho} \\
+                     0, & \mbox{if } \overline{x}^{k+1}+\frac{1}{\rho}\overline{y}^{k}\preceq \frac{\lambda}{N\rho} \\
+                     \overline{x}^{k+1}+\frac{1}{\rho}\overline{y}^{k}+\frac{\lambda}{N\rho}, & \mbox{if } \overline{x}^{k+1}+\frac{1}{\rho}\overline{y}^{k}\prec-\frac{\lambda}{N\rho}.
+                   \end{cases}
+\end{array}
+\Rightarrow
+\begin{array}{l}
+\rho(\overline{x}^{k+1}-z^{k+1})=\begin{cases}
+                                   -\overline{y}^{k}+\frac{\lambda}{N}, & \mbox{if } \overline{x}^{k+1}+\frac{1}{\rho}\overline{y}^{k}\succ\frac{\lambda}{N\rho} \\
+                                   -\overline{y}^{k}-\frac{\lambda}{N}, & \mbox{if }\overline{x}^{k+1}+\frac{1}{\rho}\overline{y}^{k}\prec-\frac{\lambda}{N\rho}.
+                                 \end{cases}
+\end{array}
+\end{aligned}
+$$
+Thus, averaging the $y$-update,
+\begin{dmath*}
+\overline{y}^{k+1}=\overline{y}^k+\rho(\overline{x}^{k+1}-z^{k+1})
+=\begin{cases}
+       \frac{\lambda}{N}, & \mbox{if } \overline{x}^{k+1}+\frac{1}{\rho}\overline{y}^{k}\succ\frac{\lambda}{N\rho} \\
+       \overline{y}^{k}+\rho\overline{x}^{k+1}, & \mbox{if }|\overline{x}^{k+1}+\frac{1}{\rho}\overline{y}^{k}|\preceq\frac{\lambda}{N\rho}\\
+       -\frac{\lambda}{N}, & \mbox{if } \overline{x}^{k+1}+\frac{1}{\rho}\overline{y}^{k}\prec-\frac{\lambda}{N\rho}.
+     \end{cases}
+\end{dmath*}
+where the curly braces denote elementwise inequalities. So we do not have $\overline{y}^k=0$.
+
+\section{Typos in section 7.1.1}
+For the examples for the $z$ update, when $g(z)=\lambda\|z\|_1$, with $\lambda>0$, and $g$ is the indicator function of $\R_+$, their $z$-updates are
+\[
+z^{k+1}:=S_{\lambda/N\rho}(\overline{x}^{k+1}+(1/\rho)\overline{y}^{k})
+\]
+and
+\[
+z^{k+1}:=(\overline{x}^{k+1}+(1/\rho)\overline{y}^{k})_+,
+\]
+respectively. Notice the plus signs instead of minus signs.
+
+\section{General Form Consensus Optimization}
+\subsection{The $z$ update in section 7.2}
+Note that $\tilde{z}_{G_i}\in\R^{n_i}$ is defined by $(\tilde{z}_{G_i})_j=z_{G_{i,j}}$, so $L_{\rho}$ is fully separable in its components. First of all, we derive the update formula for $z$, i.e., the fourth equation on page 55. Secondly, we show the result
+\(
+\sum_{\mathcal{G}(i,j)=g}(y_i^k)_j=0
+\)
+which is given on page 55.
+
+By definition,
+\begin{dmath*}
+z^{k+1}=\argmin_z\sum_{i=1}^{m}\left(-\tilde{z}_i^Ty_i^k + \frac{\rho}{2}\|x_i^{k+1}-\tilde{z}_i\|_2^2\right)
+=\argmin_z\sum_{g=1}^{N}\sum_{\mathcal{G}(i,j)=g}\left(-(\tilde{z}_i)_j(y_i^k)_j + \frac{\rho}{2}(\tilde{z}_i)_j^2-\rho(x_i^{k+1})_j(\tilde{z}_i)_j\right)
+=\argmin_z\sum_{g=1}^{N}\sum_{\mathcal{G}(i,j)=g}\frac{\rho}{2}\left(-2(\tilde{z}_i)_j\frac{(y_i^k)_j}{\rho} + (\tilde{z}_i)_j^2-2(x_i^{k+1})_j(\tilde{z}_i)_j\right)
+=\argmin_z\sum_{g=1}^{N}\sum_{\mathcal{G}(i,j)=g}\left(-2\left((x_i^{k+1})_j+\frac{(y_i^k)_j}{\rho}\right)(\tilde{z}_i)_j + (\tilde{z}_i)_j^2\right)
+%=\argmin_z\sum_{g=1}^{N}\left(k_g(\tilde{z}_i)_j^2-2(\tilde{z}_i)_j\sum_{\mathcal{G}(i,j)=g}\left((x_i^{k+1})_j+\frac{(y_i^k)_j}{\rho}\right)\right)
+%=\argmin_z\sum_{g=1}^{N}\left((\tilde{z}_i)_j-\frac{1}{k_g}\sum_{\mathcal{G}(i,j)=g}\left((x_i^{k+1})_j+\frac{(y_i^k)_j}{\rho}\right) \right)^2
+\end{dmath*}
+or equivalently,
+\begin{align}
+z_g^{k+1} &=\argmin_{(\tilde{z}_i)_j} \sum_{\mathcal{G}(i,j)=g}\left(-2\left((x_i^{k+1})_j+\frac{(y_i^k)_j}{\rho}\right)(\tilde{z}_i)_j + (\tilde{z}_i)_j^2\right)\nonumber\\
+&=\argmin_{z_g}\left(k_gz_g^2-2z_g\sum_{\mathcal{G}(i,j)=g}\left((x_i^{k+1})_j+\frac{(y_i^k)_j}{\rho}\right)\right)\nonumber\\
+ & =\argmin_{z_g}\left(z_g-\frac{1}{k_g}\sum_{\mathcal{G}(i,j)=g}\left((x_i^{k+1})_j+\frac{(y_i^k)_j}{\rho}\right) \right)^2,\quad g=1,\ldots,N \label{update-z-g}
+\end{align}
+where the second line follows from the fact that $z_g=(\tilde{z}_i)_j$ with $\mathcal{G}(i,j)=g$. \eqref{update-z-g} gives
+\begin{equation}\label{general-consensus-z-update}
+z_g^{k+1}=\frac{1}{k_g}\sum_{\mathcal{G}(i,j)=g}\left((x_i^{k+1})_j+\frac{(y_i^k)_j}{\rho}\right),\quad g=1,\ldots,N.
+\end{equation}
+which is exactly the same equation as the result on page 55.
+
+
+Since $k_gz_g^{k+1}=\sum_{\mathcal{G}(i,j)=g}(\tilde{z}_i^{k+1})_j$, we have
+\begin{equation}\label{update-tilde-z-i}
+\sum_{\mathcal{G}(i,j)=g}(\tilde{z}_i^{k+1})_j=\sum_{\mathcal{G}(i,j)=g}(x_i^{k+1})_j+\frac{1}{\rho}\sum_{\mathcal{G}(i,j)=g}(y_i^k)_j
+\end{equation}
+
+Multiplying both sides by $\rho$ and rearranging terms,
+\[
+\rho\left(\sum_{\mathcal{G}(i,j)=g}(\tilde{z}_i^{k+1})_j-\sum_{\mathcal{G}(i,j)=g}(x_i^{k+1})_j\right)=\sum_{\mathcal{G}(i,j)=g}(y_i^k)_j
+\]
+Applying similar operations on the $y$-update equation,
+\[
+\sum_{\mathcal{G}(i,j)=g}(y_i^{k+1})_j=\sum_{\mathcal{G}(i,j)=g}(y_i^k)_j-\rho\left(\sum_{\mathcal{G}(i,j)=g}(\tilde{z}_i^{k+1})_j-\sum_{\mathcal{G}(i,j)=g}(x_i^{k+1})_j\right)
+\]
+Substituting $\sum_{\mathcal{G}(i,j)=g}(y_i^k)_j$ into the above equation, we get
+\[
+\sum_{\mathcal{G}(i,j)=g}(y_i^{k+1})_j=0
+\]
+Hence, after the first iteration, we always have
+\[
+\sum_{\mathcal{G}(i,j)=g}(y_i^{k})_j=0
+\]
+Combining this with \eqref{update-tilde-z-i},
+\begin{gather*}%\label{}
+  \sum_{\mathcal{G}(i,j)=g}(\tilde{z}_i^{k+1})_j=\sum_{\mathcal{G}(i,j)=g}(x_i^{k+1})_j \\
+  \Updownarrow\\
+  k_gz_g^{k+1}=\sum_{\mathcal{G}(i,j)=g}(x_i^{k+1})_j \\
+  \Updownarrow\\
+  z_g^{k+1}=\frac{1}{k_g}\sum_{\mathcal{G}(i,j)=g}(x_i^{k+1})_j \numberthis \label{general-consensus-simpler-z-update}
+\end{gather*}
+Thus, the $z$-update step reduces to \eqref{general-consensus-simpler-z-update}. Compared to \eqref{general-consensus-z-update}, this is a simpler form. When $g(z)\neq0$, we do not have $\sum_{\mathcal{G}(i,j)=g}(y_i^{k})_j=0$ as analyzed in section \ref{global-consensus-analysis-g-z-y}. Hence, we cannot drop $(y_i)_j$ from the $z_g$ update.
+
+\subsection{General Form Consensus with Regularization (section 7.2.1)}
+Here we only consider the $z$-update since the $x$-update and $y$-update are the same as the unregularized setting. Consider the problem
+\begin{equation}\label{ADMM-general-consensus-regularization}
+\begin{array}{ll}
+\operatorname{minimize}_{x,z\in\R^n} & \sum_{i=1}^{N} f_i(x_i) + g(z)\\
+\st & x_i-\tilde{z}_i=0,\quad i=1,\ldots,N,
+\end{array}
+\end{equation}
+where $g$ is a regularization function. If $g$ is fully separable in its components, like $\ell_1$ norm or $\ell_0$ norm, we have the following derivations.
+\begin{dmath*}
+z^{k+1}=\argmin_z\left(g(z)+\sum_{i=1}^{m}\left(-\tilde{z}_i^Ty_i^k + \frac{\rho}{2}\|x_i^{k+1}-\tilde{z}_i\|_2^2\right) \right)
+=\argmin_z\left(g(z)+\sum_{g=1}^{N}\sum_{\mathcal{G}(i,j)=g}\left(-(\tilde{z}_i)_j(y_i^k)_j + \frac{\rho}{2}(\tilde{z}_i)_j^2-\rho(x_i^{k+1})_j(\tilde{z}_i)_j\right)\right)
+=\argmin_z\left(g(z)+\sum_{g=1}^{N}\sum_{\mathcal{G}(i,j)=g}\frac{\rho}{2}\left(-2(\tilde{z}_i)_j\frac{(y_i^k)_j}{\rho} + (\tilde{z}_i)_j^2-2(x_i^{k+1})_j(\tilde{z}_i)_j\right)\right)
+=\argmin_z\sum_{g=1}^{N}\left(\frac{g(z_g)}{\rho} +\sum_{\mathcal{G}(i,j)=g}\frac{1}{2}\left((\tilde{z}_i)_j^2-2\left((x_i^{k+1})_j+\frac{(y_i^k)_j}{\rho}\right)(\tilde{z}_i)_j \right)\right)
+\end{dmath*}
+equivalently,
+\begin{align*}
+z_g^{k+1}&=\argmin_{z_g}\left(\frac{g(z_g)}{\rho} +\frac{1}{2}\left(k_gz_g^2-2z_g\sum_{\mathcal{G}(i,j)=g}\left((x_i^{k+1})_j+\frac{(y_i^k)_j}{\rho}\right) \right)\right)\\
+&=\argmin_{z_g}\left(\frac{g(z_g)}{k_g\rho} +\frac{1}{2}\left(z_g^2-2z_g\frac{\sum_{\mathcal{G}(i,j)=g}\left((x_i^{k+1})_j+(y_i^k)_j/\rho\right)}{k_g} \right)\right)\\
+&=\argmin_{z_g}\left(\frac{g(z_g)}{k_g\rho} + \frac{1}{2}\left(z_g-\frac{\sum_{\mathcal{G}(i,j)=g}\left((x_i^{k+1})_j+(y_i^k)_j/\rho\right)}{k_g}\right)^2\right)\\
+&=\operatorname{prox}_{g,\frac{1}{k_g\rho}}\left(\frac{\sum_{\mathcal{G}(i,j)=g}\left((x_i^{k+1})_j+(y_i^k)_j/\rho\right)}{k_g}\right),\quad g=1,\ldots,N.
+\end{align*}
+where the equivalence follows from the fact that $z_g=(\tilde{z}_i)_j$ with $\mathcal{G}(i,j)=g$. Notice that in the original paper it is applying the proximity operator $\operatorname{prox}_{g,k_g\rho}$ to the results of the averaging step. That could be a typo. As we have seen in the above derivation, it is supposed  to be $\operatorname{prox}_{g,\frac{1}{k_g\rho}}$ instead of $\operatorname{prox}_{g,k_g\rho}$.
+
+\section{Equation 7.13 and 7.14}
+The Lagrangian of the $z$-update is
+\[
+L(z_1,\ldots,z_N,\lambda)=g(N\overline{z})+\frac{\rho}{2}\sum_{i=1}^{N}\|z_i-a_i\|_2^2+\lambda^T(\overline{z}-\frac{1}{N}\sum_{i=1}^{N}z_i)
+\]
+where $\lambda\in\R^n$ is the multiplier, $a_i=u_i^k+x_i^{k+1}$ and $\overline{z}$ is fixed. Taking derivatives w.r.t. $z_i$ and letting it be 0, we get
+\[
+\rho (z_i-a_i)-\lambda=0\Longleftrightarrow z_i-a_i=\frac{\lambda}{\rho}
+\]
+Summing over $i$, we have
+\[
+\rho\sum_{i=1}^{N} (z_i-a_i)=N\lambda\Longleftrightarrow \overline{z}-\overline{a}=\frac{\lambda}{\rho}
+\]
+Thus, (7.13) is obtained.
+\begin{equation}\label{sharing-problem-constant-difference-between-zi-and-ai}
+z_i-a_i=\overline{z}-\overline{a}\Longleftrightarrow z_i=a_i+\overline{z}-\overline{a}
+\end{equation}
+Hence, we have $z_i^{k+1}=a_i+\overline{z}^{k+1}-\overline{a}$. Substituting (7.13) for $z_i^{k+1}$ in the $u$-update gives
+\begin{dmath*}
+u_i^{k+1}=u_i^k+x_i^{k+1}-z_i^{k+1}
+=u_i^k+x_i^{k+1}-(a_i+\overline{z}^{k+1}-\overline{a})
+=u_i^k+x_i^{k+1}-(u_i^k+x_i^{k+1}+\overline{z}^{k+1}-(\overline{u}^k+\overline{x}^{k+1}))
+=\overline{x}^{k+1}-\overline{z}^{k+1}+\overline{u}^k
+\end{dmath*}
+which shows that the dual variables $u_i^k$ are all equal and can be replaced with a single dual variable $u\in\R^n$. Then
+\begin{dmath*}
+z_i^{k+1}=a_i+\overline{z}^{k+1}-\overline{a}
+=u_i^{k+1}+x_i^{k+1}+\overline{z}^{k+1}-(\overline{u}^{k+1}+\overline{x}^{k+1})
+=x_i^{k+1}+\overline{z}^{k+1}-\overline{x}^{k+1}
+\end{dmath*}
+which gives $z_i^{k}=x_i^{k}+\overline{z}^{k}-\overline{x}^{k}$. Substituting this for $z_i^k$ in the $x$-update, the final algorithm becomes
+\begin{align}
+&x_i^{k+1}:=\argmin_{x_i} \left( f_i(x_i)+\frac{\rho}{2}\|x_i-x_i^{k}-\overline{z}^{k}+\overline{x}^{k}+u^k\|_2^2\right)\label{ADMM-sharing-scaled-x} \\
+&\overline{z}^{k+1}:=\argmin_{\overline{z}} \left( g(N\overline{z})+\frac{N\rho}{2}\|\overline{z}-u^k-\overline{x}^{k+1}\|_2^2\label{ADMM-sharing-scaled-z}\right)\\
+&u^{k+1}:=u^k+\overline{x}^{k+1}-\overline{z}^{k+1}\label{ADMM-sharing-scaled-u}.
+\end{align}
+where the $z$-update follows from \eqref{sharing-problem-constant-difference-between-zi-and-ai}, which leads to the consequence that the primal variables $z_i$ disappear and are replaced by $\overline{z}$. This significantly simplifies the original $z$-update for the sharing problem. Specifically, there are $Nn$ variables in the original $z$-update, but now there are only $n$ variables.
+
+\section{The dual function of the ADMM sharing problem (7.12)}
+The ADMM sharing problem (7.12) is
+\begin{equation}\label{ADMM-sharing}
+\begin{array}{ll}
+\operatorname{minimize}& \sum_{i=1}^{N} f_i(x_i) + g(\sum_{i=1}^{N}z_i)\\
+\st & x_i-z_i=0,\quad i=1,\ldots,N,
+\end{array}
+\end{equation}
+with variables $x_i, z_i\in\R^n, i=1,\ldots,N$. The Lagrangian  is
+\begin{dmath*}
+L(x_1,\ldots,x_N,z_1,\ldots,z_N,\nu_1,\ldots,\nu_N)=\sum_{i=1}^{N} f_i(x_i) + g(\sum_{i=1}^{N}z_i) + \sum_{i=1}^{N}\nu_i^T(x_i-z_i)
+=\sum_{i=1}^{N} f_i(x_i) + \sum_{i=1}^{N}\nu_i^Tx_i + g(\sum_{i=1}^{N}z_i) - \sum_{i=1}^{N}\nu_i^Tz_i
+=\sum_{i=1}^{N} f_i(x_i) + \sum_{i=1}^{N}\nu_i^Tx_i + g(\sum_{i=1}^{N}z_i) - \sum_{i=1}^{N}\nu_i^Tz_i
+=\sum_{i=1}^{N} f_i(x_i) + \sum_{i=1}^{N}\nu_i^Tx_i + g(\sum_{i=1}^{N}z_i)-\bar{\nu}^T\sum_{i=1}^{N}z_i+\bar{\nu}^T\sum_{i=1}^{N}z_i - \sum_{i=1}^{N}\nu_i^Tz_i
+\end{dmath*}
+Minimizing over $x_i$ and $z_i$ with $i=1,\ldots,N$,
+\begin{dmath*}
+\min_{x_i,z_i} L(x_1,\ldots,x_N,z_1,\ldots,z_N,\nu_1,\ldots,\nu_N)=\min_{x_i,z_i}\left\{\sum_{i=1}^{N} f_i(x_i) + \sum_{i=1}^{N}\nu_i^Tx_i + g(\sum_{i=1}^{N}z_i)-\bar{\nu}^T\sum_{i=1}^{N}z_i+\bar{\nu}^T\sum_{i=1}^{N}z_i - \sum_{i=1}^{N}\nu_i^Tz_i\right\}
+=-\max_{x_i,z_i}\left\{\sum_{i=1}^{N}(-\nu_i)^Tx_i-\sum_{i=1}^{N} f_i(x_i) \right\}-\max_{x_i,z_i}\left\{\bar{\nu}^T\sum_{i=1}^{N}z_i - g(\sum_{i=1}^{N}z_i)\right\}+\min_{x_i,z_i}\left\{\bar{\nu}^T\sum_{i=1}^{N}z_i - \sum_{i=1}^{N}\nu_i^Tz_i\right\}
+=-\sum_{i=1}^{N}f^*(-\nu)-\max_{x_i,z_i}\left\{\bar{\nu}^T\sum_{i=1}^{N}z_i - g(\sum_{i=1}^{N}z_i)\right\}+\min_{x_i,z_i}\left\{\bar{\nu}^T\sum_{i=1}^{N}z_i - \sum_{i=1}^{N}\nu_i^Tz_i\right\}
+\end{dmath*}
+If $\bar{\nu}=\nu_1=\nu_2=\ldots=\nu_N$, then the last term will vanish and the second term will be $-g^*(\nu_1)$. Otherwise, the last term will go to $-\infty$. Thus, the dual function becomes
+\[
+\Gamma(\nu_1,\ldots,\nu_N)=\begin{cases}
+                             -\sum_{i=1}^{N}f^*(-\nu)-g^*(\nu_1), & \mbox{if } \nu_1=\nu_2=\ldots=\nu_N \\
+                             -\infty, & \mbox{otherwise}.
+                           \end{cases}
+\]
+
+\subsection{The exchange problem (Section 7.3.2)}
+In this subsection, we first provide an incorrect solution to the $x$-update of ADMM for the exchange problem. Then we give a correct way to get the correct ADMM iterations. The exchange problem is
+\begin{equation}\label{ADMM-exchange-problem}
+\begin{array}{ll}
+\operatorname{minimize}& \sum_{i=1}^{N} f_i(x_i)\\
+\st &\sum_{i=1}^{N} x_i=0,\quad i=1,\ldots,N,
+\end{array}
+\end{equation}
+The augmented Lagrangian is
+\begin{dmath*}
+L_{\rho}(x,y)=\sum_{i=1}^{N} f_i(x_i)+\langle\sum_{i=1}^{N} x_i,y^k\rangle+\frac{\rho}{2}\|\sum_{i=1}^{N} x_i\|_2^2
+=\sum_{i=1}^{N}( f_i(x_i)+\langle x_i,y^k\rangle)+\frac{\rho}{2}\|\sum_{i=1}^{N} x_i\|_2^2
+\end{dmath*}
+The $x$-update of ADMM for the exchange problem is
+\begin{dmath*}
+x_i^{k+1}=\argmin_{x_i} \left( f_i(x_i)+\langle x_i,y^k\rangle+\frac{\rho}{2}\|\sum_{i=1}^{N} x_i\|_2^2\right)\\
+{\color{red}{\neq}}\argmin_{x_i}\left( f_i(x_i)+\langle x_i,y^k\rangle +\frac{\rho}{2}\|x_i+\sum_{j\neq i}^{N} x_j^k\|_2^2\right)
+=\argmin_{x_i}\left( f_i(x_i)+\langle x_i,y^k\rangle +\frac{\rho}{2}\|x_i+\sum_{j\neq i}^{N} x_j^k+x_i^k-x_i^k\|_2^2\right)
+=\argmin_{x_i}\left( f_i(x_i)+\langle x_i,y^k\rangle +\frac{\rho}{2}\|x_i+\sum_{j=1}^{N} x_j^k-x_i^k\|_2^2\right)
+=\argmin_{x_i}\left( f_i(x_i)+\langle x_i,y^k\rangle +\frac{\rho}{2}\|x_i-(x_i^k-N\overline{x}^k)\|_2^2\right)
+\end{dmath*}
+where \textbf{the second line does not hold since the last term is not separable} due to the existence of $x_i^Tx_j$ terms after expanding the last term.
+
+To get the correct ADMM iterations, we reformulate the original problem as follows
+\begin{equation}\label{ADMM-exchange-problem-indicator-function}
+\begin{array}{ll}
+\operatorname{minimize}& \sum_{i=1}^{N} f_i(x_i) + I_C(z_1,\ldots,z_N)\\
+\st & x_i-z_i=0,\quad i=1,\ldots,N,
+\end{array}
+\end{equation}
+with $x_i$ and $z_i$ are variables. Here $I_C(z_1,\ldots,z_N)$ denotes an indicator function of the equilibrium set $C$ which is defined as
+\[
+C=\{(z_1,\ldots,z_N)\in\R^{nN}|z_1+\cdots+z_N=0\}.
+\]
+%and
+%\[
+%I_C(v)=\begin{cases}
+%         0, & \mbox{if } v\in C \\
+%         +\infty, & \mbox{otherwise}.
+%       \end{cases}
+%\]
+Thus, $I_C(z_1,\ldots,z_N)=0$ if $\sum_{i=1}^{N}z_i=0$, otherwise $I_C(z_1,\ldots,z_N)=+\infty$. Then the augmented Lagrangian is
+\[
+L_{\rho}(x,z,y)=\sum_{i=1}^{N} \left(f_i(x_i) + \langle y_i^k, x_i-z_i^k\rangle + \frac{\rho}{2}\|x_i-z_i^k\|_2^2\right) + I_C(z_1,\ldots,z_N).
+\]
+The corresponding ADMM is
+\begin{align}
+&x_i^{k+1}:=\argmin_{x_i}\left( f_i(x_i) + \langle y_i^k, x_i\rangle + \frac{\rho}{2}\|x_i-z_i^k\|_2^2\right) \\
+&z^{k+1}:=\argmin_z \sum_{i=1}^{N} \left(-\langle y_i^k, z_i\rangle + \frac{\rho}{2}\|x_i^{k+1}-z_i\|_2^2\right) + I_C(z_1,\ldots,z_N)\label{ADMM-exchange-problem-z-update}\\
+&y_i^{k+1}:=y_i^k+\rho(x_i^{k+1}-z_i^{k+1})
+\end{align}
+Now we reformulate \eqref{ADMM-exchange-problem-z-update} to get
+\begin{dmath*}%\label{ADMM-exchange-problem-z-update-reformulation}
+z^{k+1}=\argmin_z \sum_{i=1}^{N} \left(\frac{\rho}{2}\|z_i-x_i^{k+1}\|_2^2-\langle y_i^k, z_i\rangle\right) + I_C(z_1,\ldots,z_N)
+=\argmin_z \sum_{i=1}^{N} \frac{\rho}{2}\left(\|z_i-x_i^{k+1}\|_2^2-2\langle\frac{y_i^k}{\rho}, z_i\rangle\right) +I_C(z_1,\ldots,z_N)
+=\argmin_z \sum_{i=1}^{N} \left(\frac{\rho}{2}\|z_i-(x_i^{k+1}+\frac{y_i^k}{\rho})\|_2^2\right) +I_C(z_1,\ldots,z_N)
+\end{dmath*}
+which turns out to be a projection problem. Actually, the minimizer of the separable summation is $z_i=x_i^{k+1}+\frac{y_i^k}{\rho}$ for each $i$. The projection reduces to the following de-meaning operation
+\[
+z_i^{k+1}=[\Pi(z_1,\ldots,z_N)]_i=z_i-\bar{z}_i=x_i^{k+1}+\frac{y_i^k}{\rho}-(\bar{x}^{k+1}+\frac{\bar{y}^k}{\rho})
+\]
+Substituting this into $y$-update for $z_i^{k+1}$,
+\begin{dmath*}
+y_i^{k+1}=y_i^k+\rho\left(x_i^{k+1}-x_i^{k+1}-\frac{y_i^k}{\rho}+(\bar{x}^{k+1}+\frac{\bar{y}^k}{\rho})\right)
+=y_i^k+\rho\left(-\frac{y_i^k}{\rho}+(\bar{x}^{k+1}+\frac{\bar{y}^k}{\rho})\right)
+=\rho\bar{x}^{k+1}+\bar{y}^k
+\end{dmath*}
+which indicates that the dual variables $y_i^k$ are all equal and can be replaced with a single dual variable $y\in\R^n$. Hence, the $z$-update reduces to
+\[
+z_i^{k+1}=x_i^{k+1}-\bar{x}^{k+1}
+\]
+Substituting this into $x$-update for $z_i^k$ and $y^k$ for $y_i^k$,
+\[
+x_i^{k+1}:=\argmin_{x_i}\left( f_i(x_i) + \langle y^k, x_i\rangle + \frac{\rho}{2}\|x_i-(x_i^{k}-\bar{x}^{k})\|_2^2\right)
+\]
+Finally, we simplify the ADMM algorithm by finding out that $y_i$ are identical and $z$-update can fuse into $x$-update. The final ADMM algorithm becomes
+\begin{align*}
+ & x_i^{k+1}:=\argmin_{x_i}\left( f_i(x_i) + \langle y^k, x_i\rangle + \frac{\rho}{2}\|x_i-(x_i^{k}-\bar{x}^{k})\|_2^2\right) \\
+ & y^{k+1}:=y^k+\rho\bar{x}^{k+1}
+\end{align*}
+By letting $u^k=y^k/\rho$, we get the scaled form
+\begin{align*}
+ & x_i^{k+1}:=\argmin_{x_i}\left( f_i(x_i) + \frac{\rho}{2}\|x_i-x_i^{k}+\bar{x}^{k}-u^k\|_2^2\right) \\
+ & u^{k+1}:=u^k+\bar{x}^{k+1}
+\end{align*}
+Both forms are exactly consistent with what the original paper presents. Also, we can make use of the results obtained by solving (7.12) in section 7.3. Specifically, let $g(\sum_{i=1}^{N}z_i)=I_C(\sum_{i=1}^{N}z_i)$ with $C=\{0\}$. Then (7.12) can be written as
+\begin{equation}
+\begin{array}{ll}
+\operatorname{minimize}& \sum_{i=1}^{N} f_i(x_i) + I_C(\sum_{i=1}^{N}z_i)\\
+\st & x_i-z_i=0,\quad i=1,\ldots,N,
+\end{array}
+\end{equation}
+which is equivalent to \eqref{ADMM-exchange-problem-indicator-function}. Hence, we can use the results just preceding section 7.3.1 on page 57. Specifically, it is straightforward to get
+\[
+\overline{z}^{k+1}=0
+\]
+since $g(N\overline{z})$ is the indictor function $I_C(N\overline{z})$. Substituting this into the $x$-update and $u$-update for $\overline{z}^{k}$ and $\overline{z}^{k+1}$ (see \eqref{ADMM-sharing-scaled-x} and \eqref{ADMM-sharing-scaled-u} in the current document), respectively, we get
+\begin{align*}
+x_i^{k+1}&:=\argmin_{x_i} \left( f_i(x_i)+\frac{\rho}{2}\|x_i-x_i^{k}-\overline{z}^{k}+\overline{x}^{k}+u^k\|_2^2\right) \\
+&:=\argmin_{x_i} \left( f_i(x_i)+\frac{\rho}{2}\|x_i-x_i^{k}+\overline{x}^{k}+u^k\|_2^2\right)\\
+u^{k+1}&:=u^k+\overline{x}^{k+1}-\overline{z}^{k+1}\\
+&:=u^k+\overline{x}^{k+1}.
+\end{align*}
+which is still consistent with the scaled form of ADMM on page 59.
+
+\section{Solution to group lasso (section 8.3.2)}
+Taking derivatives w.r.t. $x_i$ and letting 0 be an element of it,
+\[
+0\in\rho A_i^T(A_ix_i-v) + \lambda g
+\]
+where $g\in \partial h(x_i)$ with $h(x_i)=\|x_i\|_2$. When $x_i\neq0$, $g=\nabla h(x_i)=\frac{x_i}{\|x_i\|_2}$. If $x_i=0$, by the definition of subdifferential, for any $x_i^{\prime}$ we have
+\[
+h(x_i^{\prime})\ge 0 + g^Tx_i^{\prime}\Rightarrow \|x_i^{\prime}\|_2\ge g^Tx_i^{\prime}\Rightarrow g^T\frac{x_i^{\prime}}{\|x_i^{\prime}\|_2}\le 1\Rightarrow \|g\|_2\le 1.
+\]
+Thus,
+\[
+x_i=0\Leftrightarrow 0\in \rho A_i^T(A_i\cdot 0-v) + \lambda g\Leftrightarrow 0\in \lambda g-\rho A_i^Tv  \Leftrightarrow \frac{\rho}{\lambda} A_i^Tv\in g\Leftrightarrow\|A_i^Tv\|_2\le\frac{\lambda}{\rho}
+\]
+where the last ``$\Leftrightarrow$'' follows from $\|g\|_2\le 1$. When $x_i\neq0$, the first-order optimality gives
+\begin{equation*}
+\rho A_i^T(A_ix_i-v) + \lambda\frac{x_i}{\|x_i\|_2}=0 \Leftrightarrow ( A_i^TA_i+\frac{\lambda}{\rho\|x_i\|_2}I)x_i= A_i^Tv\Leftrightarrow
+x_i=( A_i^TA_i+\frac{\lambda}{\rho\|x_i\|_2}I)^{-1}A_i^Tv
+\end{equation*}
+For a tall $A_i$, we can compute an orthogonal $Q$ for which $A_i^TA_i=Q\mathrm{diag}(\lambda_0)Q^T$, where $\lambda_0$ is the vector of eigenvalues of $A_i^TA_i$. Then
+\begin{align*}
+  \|x_i\|_2&=\|( A_i^TA_i+\frac{\lambda}{\rho\|x_i\|_2}I)^{-1}A_i^Tv\|_2 \\
+  &=\|(Q\mathrm{diag}(\lambda_0)Q^T+\frac{\lambda}{\rho\|x_i\|_2}QQ^T)^{-1}A_i^Tv\|_2 \\
+  &=\|\left(Q\mathrm{diag}(\lambda_0+\frac{\lambda}{\rho\|x_i\|_2}\mathbf{1})Q^T\right)^{-1}A_i^Tv\|_2 \\
+  &=\|Q\mathrm{diag}(\lambda_0+\frac{\lambda}{\rho\|x_i\|_2}\mathbf{1})^{-1}Q^TA_i^Tv\|_2\\
+  &=\|\mathrm{diag}(\lambda_0+\frac{\lambda}{\rho\|x_i\|_2}\mathbf{1})^{-1}Q^TA_i^Tv\|_2\\
+  &=\|\mathrm{diag}(\lambda_0+\nu\mathbf{1})^{-1}Q^TA_i^Tv\|_2
+\end{align*}
+To be consistent with the original paper, we let $\nu=\frac{\lambda}{\rho\|x_i\|_2}$ in the last line. The second last line follows from the fact that $\|Qx\|_2=\|x\|_2$ for an orthogonal $Q$. We define $f(\nu):=\|\mathrm{diag}(\lambda_0+\nu\mathbf{1})^{-1}Q^TA_i^Tv\|_2-\lambda/(\rho \nu)$ and find $\nu_1,\nu_2$ such that $f(\nu_1)f(\nu_2)\le 0$. Then we repeatedly apply bisection until $f(\frac{\nu_1+\nu_2}{2})$ is very close to 0. After that, we get $x_i$ through $x_i=(A_i^TA_i+\nu I)^{-1}A_i^Tv$. 
+
+\section{Chapter 9}
+\subsection{The form of $f(X)$ in section 9.1.2}
+There is a notation problem in this section. In the problem of factor model fitting, it is supposed to be $X\succeq 0$ instead of $X\ge 0$. In other words, $X$ is positive semi-definite. After $f(X)$ is obtained, the original paper refers to $\mathcal{S}$ as the set of positive semidefinte rank-$k$ matrices.
+
+For the description in the parenthesis following the formulation of the problem, to put it in another way, any convex function can be an alternative to the Frobenius norm. This gives $f(X)$. More specifically, when $X_{ii}\ge \Sigma_{ii}$, $d_i=0$. Otherwise, $d_i=\Sigma_{ii}-X_{ii}, i=1,\ldots,n$.
+
+\subsection{$X$-update of the factor model fitting problem}
+When $i\neq j$, the operator $(\cdot)_+$ is not involved after substituting $f(X)$ into the definition of $X$-update. $(X^{k+1})_{ij}$ can be obtained via the first-order optimality condition. For $i=j$, if $X_{ii}\ge \Sigma_{ii}$, we have
+\begin{gather*}
+X_{ii}-\Sigma_{ii}+\rho (X_{ii}-Z^{k}_{ii}+U^{k}_{ii})=0 \\
+\Downarrow\\
+(1+\rho)X_{ii}=\Sigma_{ii}+\rho(Z^{k}_{ii}-U^{k}_{ii})\\
+\Downarrow\\
+X_{ii}=\frac{1}{(1+\rho)}\Sigma_{ii}+\frac{\rho}{(1+\rho)}(Z^{k}_{ii}-U^{k}_{ii})\\
+\Downarrow\\
+X_{ii}\ge \Sigma_{ii} \Longleftrightarrow \frac{1}{(1+\rho)}\Sigma_{ii}+\frac{\rho}{(1+\rho)}(Z^{k}_{ii}-U^{k}_{ii})\ge \Sigma_{ii}\Longleftrightarrow \Sigma_{ii}\le Z^{k}_{ii}-U^{k}_{ii}.
+\end{gather*}
+
+If $X_{ii}< \Sigma_{ii}$, the $(\cdot)_+$ term vanishes. This gives 
+\begin{gather*}
+X_{ii}-Z^{k}_{ii}+U^{k}_{ii}=0 \Longleftrightarrow X_{ii}=Z^{k}_{ii}-U^{k}_{ii}\\
+X_{ii}< \Sigma_{ii} \Longleftrightarrow \Sigma_{ii} > Z^{k}_{ii}-U^{k}_{ii}.
+\end{gather*}
+
+
+
+
+
+\end{document}
