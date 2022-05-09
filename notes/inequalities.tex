@@ -112,9 +112,16 @@ which can also be expressed as $(x^Ty)^2\le \|x\|_2^2\|y\|_2^2$. Here, $x=(x_1,x
   (x_1y_1+x_2y_2+\ldots+x_ny_n)^2\le (x_1^2+x_2^2+\ldots+x_n^2)(y_1^2+y_2^2+\ldots+y_n^2) \\
   (\sum_{i=1}^{n}x_iy_i)^2=\sum_{i=1}^{n}x_i^2\sum_{i=1}^{n}y_i^2
 \end{gather*}
-Let $y_i=\sqrt{b_i}$ and $x_i=\frac{a_i}{\sqrt{b_i}}$. We have an important \textbf{variant} of Cauchy-Schwarz inequality.
+
+\subsection{Two variants of Cauchy-Schwarz inequality}
+Given $a_i\in\R$ and $b_i>0(i=1,2,\cdots,n)$, let $y_i=\sqrt{b_i}$ and $x_i=\frac{a_i}{\sqrt{b_i}}$. Then we have an important \textbf{variant} of Cauchy-Schwarz inequality.
 \[
-(\sum_{i=1}^{n}\frac{a_i}{\sqrt{b_i}}\sqrt{b_i})^2=(\sum_{i=1}^{n}a_i)^2\le (\sum_{i=1}^{n}\frac{a_i^2}{b_i})\sum_{i=1}^{n}b_i\Longleftrightarrow \frac{(\sum_{i=1}^{n}a_i)^2}{\sum_{i=1}^{n}b_i}\le \sum_{i=1}^{n}\frac{a_i^2}{b_i}
+(\sum_{i=1}^{n}\frac{a_i}{\sqrt{b_i}}\sqrt{b_i})^2=(\sum_{i=1}^{n}a_i)^2\le (\sum_{i=1}^{n}\frac{a_i^2}{b_i})\sum_{i=1}^{n}b_i\Longleftrightarrow {\color{red}\sum_{i=1}^{n}\frac{a_i^2}{b_i}\ge \frac{(\sum_{i=1}^{n}a_i)^2}{\sum_{i=1}^{n}b_i}}.
+\]
+
+For $a_i>0$ and $b_i>0(i=1,2,\cdots,n)$, letting $x_i=\sqrt{\frac{a_i}{b_i}}$ and $y_i=\sqrt{a_ib_i}$ gives
+\[
+\sum_{i=1}^{n}x_i^2\cdot\sum_{i=1}^{n}y_i^2\ge (\sum_{i=1}^{n}x_iy_i)^2\Longleftrightarrow \sum_{i=1}^{n}\frac{a_i}{b_i}\cdot\sum_{i=1}^{n}a_ib_i\ge (\sum_{i=1}^{n}a_i)^2\Longleftrightarrow {\color{red}\sum_{i=1}^{n}\frac{a_i}{b_i}\ge \frac{(\sum_{i=1}^{n}a_i)^2}{\sum_{i=1}^{n}a_ib_i}}.
 \]
 
 \section{Rearrangement inequalities}
@@ -133,6 +140,177 @@ Now, since $i<j$, it follows that $b_i\le b_j$. Likewise, since $i<k$, it follow
 which demonstrates that the sum $a_1b_{\pi(1)}+a_2b_{\pi(2)}+\cdots+a_nb_{\pi(n)}$ is not decreased by changing $\pi(j)=i$ and $\pi(k)=i$ to $\pi(i)=i$ and $\pi(k)=j$. This implies the identity permutation gives the maximum possible value of the sum $a_1b_{\pi(1)}+a_2b_{\pi(2)}+\cdots+a_nb_{\pi(n)}$, as desired. Moreover, the reverse identity permutation gives the minimum possible value of the sum $a_1b_{\pi(1)}+a_2b_{\pi(2)}+\cdots+a_nb_{\pi(n)}$.
 \end{proof}
 
+\subsection{Chebyshev's inequality}
+For two sequences $a_1\le a_2\le \cdots\le a_n$ and $b_1\le b_2\le \cdots\le b_n$ with reals $a_i$ and $b_i$, by the rearrangement inequalities, we always have the following inequalities
+\begin{gather*}
+x_1y_n+x_2y_{n-1}+\cdots+x_ny_1\le x_1y_1+x_2y_2+\cdots+x_ny_n\le x_1y_1+x_2y_2+\cdots+x_ny_n\\
+x_1y_n+x_2y_{n-1}+\cdots+x_ny_1\le x_1y_2+x_2y_3+\cdots+x_ny_1\le x_1y_1+x_2y_2+\cdots+x_ny_n\\
+x_1y_n+x_2y_{n-1}+\cdots+x_ny_1\le x_1y_3+x_2y_4+\cdots+x_ny_2\le x_1y_1+x_2y_2+\cdots+x_ny_n\\
+\cdots\\
+x_1y_n+x_2y_{n-1}+\cdots+x_ny_1\le x_1y_n+x_2y_1+\cdots+x_ny_{n-1}\le x_1y_1+x_2y_2+\cdots+x_ny_n
+\end{gather*}
+Summing up the above inequalities gives
+\begin{gather*}
+n(x_1y_n+x_2y_{n-1}+\cdots+x_ny_1)\le (x_1+x_2+\cdots+x_n)(y_1+y_2+\cdots+y_n)\le n(x_1y_1+x_2y_2+\cdots+x_ny_n)\\
+\frac{1}{n}(x_1y_n+x_2y_{n-1}+\cdots+x_ny_1)\le\frac{1}{n^2} (x_1+x_2+\cdots+x_n)(y_1+y_2+\cdots+y_n)\le \frac{1}{n}(x_1y_1+x_2y_2+\cdots+x_ny_n)\\
+\frac{1}{n}\sum_{i=1}^{n}x_iy_{n+1-i}\le \frac{1}{n}\sum_{i=1}^{n}x_i\cdot\frac{1}{n}\sum_{i=1}^{n}y_i\le \frac{1}{n}\sum_{i=1}^{n}x_iy_i
+\end{gather*}
+which is called Chebyshev's inequality.
 
+
+\section{Quadratic mean, average mean, geometric mean, and harmonic mean}
+The content in this section is largely taken from Xicheng Peng et al. Exploring Inequalities. 2016. In this section, we give the relationships between quadratic mean (QM), average mean (AM), geometric mean (GM), and harmonic mean (HM). The result is QM$\ge$AM$\ge$GM$\ge$HM.
+
+For any positive real number $a_1,a_2,\cdots,a_n$, we have the following inequalities
+\begin{equation}\label{AM-GM-HM}
+\overbrace{\sqrt{\frac{a_1^2+a_2^2+\cdots+a_n^2}{n}}}^{\text{Quadratic Mean}}\ge\overbrace{\frac{a_1+a_2+\cdots+a_n}{n}}^{\text{Arithmetic Mean}}\ge\overbrace{\sqrt[n]{a_1a_2\cdots a_n}}^{\text{Geometric Mean}}\ge \overbrace{\frac{n}{\frac{1}{a_1}+\frac{1}{a_1}+\cdots+\frac{1}{a_n}}}^{\text{Harmonic Mean}}
+\end{equation}
+where the equalities hold if and only if $a_1=a_2=\cdots=a_n$. This inequality chain is also denoted as $H(n)\le G(n)\le A(n)\le Q(n)$.
+
+We will provide two proofs. The first proof employs Jensen's inequality and is simpler compared with the second proof.
+\begin{proof} 
+Let $f(x)=-\ln x$, then $f''(x)=\frac{1}{x^2}>0$ which implies that $f$ is convex. For all $a_i>0$, by Jensen's inequality,
+\begin{gather*}
+f(\frac{\frac{1}{a_1}+\frac{1}{a_2}+\cdots+\frac{1}{a_n}}{n})\le \frac{1}{n}\left(f(\frac{1}{a_1})+f(\frac{1}{a_2})+\cdots +f(\frac{1}{a_n})\right)\\
+-\ln(\frac{\frac{1}{a_1}+\frac{1}{a_2}+\cdots+\frac{1}{a_n}}{n})\le \frac{1}{n}\left(-\ln(\frac{1}{a_1})-\ln(\frac{1}{a_2})+\cdots -\ln(\frac{1}{a_n})\right)\\
+\ln(\frac{n}{\frac{1}{a_1}+\frac{1}{a_2}+\cdots+\frac{1}{a_n}})\le \frac{1}{n}(\ln a_1 +\ln a_2 +\cdots+ \ln a_n)\\
+\ln(\frac{n}{\frac{1}{a_1}+\frac{1}{a_2}+\cdots+\frac{1}{a_n}})\le \ln\sqrt[n]{a_1a_2\cdots a_n}
+\end{gather*}
+Since $\ln$ is increasing,
+\[
+\frac{n}{\frac{1}{a_1}+\frac{1}{a_2}+\cdots+\frac{1}{a_n}}\le\sqrt[n]{a_1a_2\cdots a_n}
+\]
+where the equality holds if and only if $a_1=a_2=\cdots=a_n$. The ``if'' part is obvious. For the ``only if'' part, suppose the equality holds with $a_1\neq a_2=a_3=\cdots=a_n$, then let $a_1=ka_2 (k>0)$ we have
+\begin{gather*}
+\frac{n}{(n-1+\frac{1}{k})\frac{1}{a_2}}=a_2\sqrt[n]{k}\Longleftrightarrow \frac{n}{(n-1+\frac{1}{k})}=\sqrt[n]{k}\Longleftrightarrow n=\sqrt[n]{k}(n-1+\frac{1}{k})
+\end{gather*}
+Let $x=\sqrt[n]{k}$ and it is clear that $x>0$. Then
+\[
+nx^{n-1}=(n-1)x^n+1\Longleftrightarrow (n-1)x^n-nx^{n-1}+1=0
+\]
+\begin{align*}
+(n-1)x^n-nx^{n-1}+1&=(n-1)x^n-(n-1)x^{n-1}-x^{n-1}+1  \\
+   &=(n-1)x^{n-1}(x-1)-(x^{n-1}-1)\\
+   &=(n-1)x^{n-1}(x-1)-(x-1)(x^{n-2}+x^{n-3}+\cdots+1)\\
+   &=(x-1)[(n-1)x^{n-1}-(x^{n-2}+x^{n-3}+\cdots+1)]\\
+   &=(x-1)[(n-1)x^{n-1}-(n-1)x^{n-2}+(n-2)x^{n-2}-x^{n-3}-\cdots-1]\\
+   &=(x-1)[(n-1)x^{n-2}(x-1)+(n-2)x^{n-2}-x^{n-3}-\cdots-1]\\
+   &=(x-1)[(n-1)x^{n-2}(x-1)+(n-2)x^{n-2}-(n-2)x^{n-3}+(n-3)x^{n-3}-\cdots-1]\\
+   &=(x-1)[(n-1)x^{n-2}(x-1)+(n-2)x^{n-3}(x-1)+(n-3)x^{n-3}-\cdots-1]\\
+   &=(x-1)[(n-1)x^{n-2}(x-1)+(n-2)x^{n-3}(x-1)+(n-3)x^{n-4}(x-1)+\cdots +(x-1)]\\
+   &=(x-1)^2[(n-1)x^{n-2}+(n-2)x^{n-3}+(n-3)x^{n-4}+\cdots +1]
+\end{align*}
+Due to the fact that any polynomial that has positive coefficients cannot have roots on
+the nonnegative real axis\footnote{\url{https://mtns2018.hkust.edu.hk/media/files/0073.pdf}. Besides that paper, we can also prove this fact via contradiction. Suppose this kind of polynomial $P(x)$ has some positive real roots, say $P(x_0)=0$, then each term of $P(x_0)$ is positive which leads to $P(x_0)>0$, a contradiction. Thus, $x_0$ does not exist.}, 1 is the only roots which contradicts the supposition that $a_1\neq a_2$. Hence, $a_1=a_2=\cdots=a_n$ is the necessary and sufficient condition for the equality to hold. 
+
+Now we show GM$\le$AM,
+\begin{gather*}
+f(\frac{a_1+a_2+\cdots+a_n}{n})\le \frac{1}{n}\left(f(a_1)+f(a_2)+\cdots +f(a_n)\right)\\
+-\ln(\frac{a_1+a_2+\cdots+a_n}{n})\le \frac{1}{n}\left(-\ln(a_1)-\ln(a_1)+\cdots -\ln(a_1)\right)\\
+\ln(\frac{a_1+a_2+\cdots+a_n}{n})\ge \frac{1}{n}(\ln a_1 +\ln a_2 +\cdots+ \ln a_n)\\
+\ln(\frac{a_1+a_2+\cdots+a_n}{n})\ge \ln\sqrt[n]{a_1a_2\cdots a_n}\\
+\frac{a_1+a_2+\cdots+a_n}{n}\ge \sqrt[n]{a_1a_2\cdots a_n}
+\end{gather*}
+Let $g(x)=x^2$, then $g''(x)=2>$ which indicates that $g$ is convex.
+
+Now we show AM$\le$QM. By Jensen's inequality, we have
+\begin{gather*}
+g(\frac{a_1+a_2+\cdots+a_n}{n})\le \frac{1}{n}\left(g(a_1)+g(a_2)+\cdots +g(a_n)\right)\\
+(\frac{a_1+a_2+\cdots+a_n}{n})^2\le \frac{1}{n}(a_1^2+a_2^2+\cdots +a_n^2)\\
+\frac{a_1+a_2+\cdots+a_n}{n}\le \sqrt{\frac{a_1^2+a_2^2+\cdots +a_n^2}{n}}
+\end{gather*}
+This completes our proof.
+\end{proof} 
+
+We first introduce a lemma for the final proof.
+\begin{lemma}\label{lemma-4-average-inequalities}
+If $a_i>0, i=1,2,\cdots,n$, and $a_1a_2\cdots a_n=1$, then $a_1+a_2+\cdots+a_n\ge n$ where the equality holds iff $a_1=a_2=\cdots=a_n=1$.
+\end{lemma}
+\begin{proof}
+Let $x_i=\ln a_i, i=1,2,\cdots,n$.
+\[
+a_1a_2\cdots a_n=1\Longleftrightarrow \ln a_1+\ln a_2+\cdots+\ln a_n=0\Longleftrightarrow x_1+x_2+\cdots+x_n=0
+\]
+Since $e^x\ge x+1$,
+\[
+a_1+a_2+\cdots +a_n=e^{x_1}+e^{x_2}+\cdots+e^{x_n}\ge (x_1+1)+(x_2+1)+\cdots+(x_n+1)= n
+\]
+where the equality holds iff $x_i=0, \forall i=1,2,\cdots,n$, i.e., $a_i=1, \forall i=1,2,\cdots,n$ due to the fact that $e^x=x+1$ iff $x=0$. Thus, $a_1+a_2+\cdots +a_n=n$ iff $a_1=a_2=\cdots=a_n=1$.
+\end{proof}
+Next, we prove this inequality chain using Lemma \ref{lemma-4-average-inequalities}.
+\begin{proof}
+\begin{enumerate}
+  \item $H(n)\le G(n)$
+  \[
+  \frac{n}{\frac{1}{a_1}+\frac{1}{a_2}+\cdots+\frac{1}{a_n}}\le \sqrt[n]{a_1a_2\cdots a_n}\Longleftrightarrow
+  \frac{\sqrt[n]{a_1a_2\cdots a_n}}{a_1}+\frac{\sqrt[n]{a_1a_2\cdots a_n}}{a_2}+\cdots+\frac{\sqrt[n]{a_1a_2\cdots a_n}}{a_n}\ge n
+  \]
+  We observe that $\frac{\sqrt[n]{a_1a_2\cdots a_n}}{a_1}\cdot\frac{\sqrt[n]{a_1a_2\cdots a_n}}{a_2}\cdot\cdots\cdot\frac{\sqrt[n]{a_1a_2\cdots a_n}}{a_n}=1$. By Lemma \ref{lemma-4-average-inequalities}, the above holds. The equality holds iff $\frac{\sqrt[n]{a_1a_2\cdots a_n}}{a_1}=\frac{\sqrt[n]{a_1a_2\cdots a_n}}{a_2}=\cdots=\frac{\sqrt[n]{a_1a_2\cdots a_n}}{a_n}$, i.e., $a_1=a_2=\cdots=a_n$.
+  \item $G(n)\le A(n)$
+  \[
+  \sqrt[n]{a_1a_2\cdots a_n}\le \frac{a_1+a_2+\cdots+a_n}{n} \Longleftrightarrow
+  \frac{a_1}{\sqrt[n]{a_1a_2\cdots a_n}}+\frac{a_2}{\sqrt[n]{a_1a_2\cdots a_n}}+\cdots+\frac{a_n}{\sqrt[n]{a_1a_2\cdots a_n}}\ge n
+  \]
+  We observe that $\frac{a_1}{\sqrt[n]{a_1a_2\cdots a_n}}\cdot\frac{a_2}{\sqrt[n]{a_1a_2\cdots a_n}}\cdot\cdots\cdot\frac{a_n}{\sqrt[n]{a_1a_2\cdots a_n}}=1$. By Lemma \ref{lemma-4-average-inequalities}, the above holds. The equality holds iff $\frac{a_1}{\sqrt[n]{a_1a_2\cdots a_n}}=\frac{a_2}{\sqrt[n]{a_1a_2\cdots a_n}}=\cdots=\frac{a_n}{\sqrt[n]{a_1a_2\cdots a_n}}$, i.e., $a_1=a_2=\cdots=a_n$.
+  \item $A(n)\le Q(n)$. Let $c=\frac{a_1+a_2+\cdots+a_n}{n}$ and $a_i=c+\alpha_i,\forall i=1$. Then
+  \begin{dmath*}
+  a_1+a_2+\cdots+a_n=nc+\alpha_1+\alpha_2+\cdots+\alpha_n
+  =a_1+a_2+\cdots+a_n +(\alpha_1+\alpha_2+\cdots+\alpha_n)
+  \end{dmath*}
+
+  So, $\alpha_1+\alpha_2+\cdots+\alpha_n=0$.
+  \begin{dmath*}
+  \sqrt{\frac{a_1^2+a_2^2+\cdots+a_n^2}{n}}
+  =\sqrt{\frac{(c+\alpha_1)^2+(c+\alpha_2)^2+\cdots+(c+\alpha_n)^2}{n}}
+  =\sqrt{\frac{nc^2+2c(\alpha_1+\alpha_2+\cdots+\alpha_n)+\alpha_1^2+\alpha_2^2+\cdots+\alpha_n^2}{n}}
+  =\sqrt{\frac{nc^2+\alpha_2^2+\cdots+\alpha_n^2}{n}}
+  =\sqrt{c^2+\frac{\alpha_2^2+\cdots+\alpha_n^2}{n}}
+  \ge \sqrt{c^2}\hiderel{=}c
+  \end{dmath*}
+where the third equality follows from $\alpha_1+\alpha_2+\cdots+\alpha_n=0$ and $c=\frac{a_1+a_2+\cdots+a_n}{n}$.
+\end{enumerate}
+Lemma \ref{lemma-4-average-inequalities} is not involved with the proof of $A(n)\le Q(n)$.
+\end{proof}
+\begin{note}
+AM$\ge$GM$\ge$HM can be proved using induction; see Theorem 1.2.2 of Jixiu Chen et al. Mathematical Analysis, third edition.
+\end{note}
+\subsection{An inequality about the difference between AM and GM}
+Given $a,b,c\in\R_+$, show $3(\frac{a+b+c}{3}-\sqrt[3]{abc})\ge 2(\frac{a+b}{2}-\sqrt{ab})$.
+\begin{proof}
+After simple algebra, it suffices to show
+\[
+c+2\sqrt{ab}\ge 3\sqrt[3]{abc}
+\]
+If we consider $2\sqrt{ab}$ as $\sqrt{ab}+\sqrt{ab}$ on the LHS, we can use AM-GM to get
+\[
+c+\sqrt{ab}+\sqrt{ab}\ge 3\sqrt[3]{\sqrt{ab}\cdot\sqrt{ab}\cdot c}=3\sqrt[3]{abc}.
+\]
+This completes our proof.
+\end{proof}
+
+This result can be easily shown for the general case, namely
+\[
+(n+1)(\frac{a_1^2+a_2^2+\cdots+a_{n+1}^2}{n+1}-\sqrt[n+1]{a_1a_2\cdots a_{n+1}})\ge
+n(\frac{a_1^2+a_2^2+\cdots+a_n^2}{n}-\sqrt[n]{a_1a_2\cdots a_n}).
+\]
+\subsection{Power mean inequality}
+Refer to Page 106 of Xicheng Peng et al. Exploring Inequalities. 2016. This will be done later.
+
+\subsection{Weighted power mean inequality}
+Refer to Page 108 of Xicheng Peng et al. Exploring Inequalities. 2016. This will be done later.
+
+\subsection{Applications}
+Given positive reals $a,b,c$ and $a+b+c=1$, show that $ab+bc+ca\le \frac{1}{3}$.
+\begin{proof}
+Since the geometric mean is not less than the average mean, we have
+\[
+\sqrt{\frac{a^2+b^2+c^2}{3}}\ge \frac{a+b+c}{3}=\frac{1}{3} \Longleftrightarrow a^2+b^2+c^2\ge \frac{1}{3}.
+\]
+Also we have
+\[
+ab+bc+ca=\frac{(a+b+c)^2-(a^2+b^2+c^2)}{2}=\frac{1-(a^2+b^2+c^2)}{2}\le \frac{1-1/3}{2}=\frac{1}{3},
+\]
+as desired.
+\end{proof}
 
 \end{document} 
