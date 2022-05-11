@@ -82,80 +82,9 @@ Email: \href{mailto:kkai\_zhao@yeah.net}{kkai\_zhao@yeah.net}
 \maketitle
 \tableofcontents
 
-\section{H\"{o}lder inequality}
-A classic result concerning $p$-norms is the \textbf{\textcolor[rgb]{1.00,0.00,0.00}{H\"{o}lder inequality in inner-product form}}:
-$$
-|x^T y|\le \|x\|_p\|y\|_q,\quad \frac{1}{p}+\frac{1}{q}=1.
-$$
-\begin{proof}
-Recall the definition of dual norm,
-$$
-\|x\|_p=\max_{\|z\|_q\le 1} x^Tz.
-$$
-Thus, $x^Tz\le \|x\|_p$ holds for any $z$ satisfying $\|z\|_q\le 1$, including $\|z\|_q= 1$. When $\|z\|_q= 1$, we have
-$$x^Tz\le \|x\|_p\|z\|_q$$
-Now let $z=ty$ with $t>0$. Thus, we have
-\begin{equation*}
-  x^T(ty)\le \|x\|_p\|ty\|_q \Longleftrightarrow x^Ty\le \|x\|_p\|y\|_q
-\end{equation*}
-where $\|y\|_q=\|z/t\|_q=1/t\|z\|_q=1/t>0$. This completes the proof.
-\end{proof}
-The key part of the above proof is using the dual representation of the $\ell_p$ norm, namely, $\|x\|_p=\max_{\|z\|_q\le 1} x^Tz$.
 
-\subsection{Cauchy-Schwarz inequality}
-A very important special case of H\"{o}lder inequality is \textcolor[rgb]{1.00,0.00,0.00}{\textbf{Cauchy-Schwarz inequality}}:
-$$
-|x^T y|\le \|x\|_2\|y\|_2.
-$$
-which can also be expressed as $(x^Ty)^2\le \|x\|_2^2\|y\|_2^2$. Here, $x=(x_1,x_2,\ldots,x_n)$ and $y=(y_1,y_2,\ldots,y_n)$. Thus,
-\begin{gather*}
-  (x_1y_1+x_2y_2+\ldots+x_ny_n)^2\le (x_1^2+x_2^2+\ldots+x_n^2)(y_1^2+y_2^2+\ldots+y_n^2) \\
-  (\sum_{i=1}^{n}x_iy_i)^2=\sum_{i=1}^{n}x_i^2\sum_{i=1}^{n}y_i^2
-\end{gather*}
 
-\subsection{Two variants of Cauchy-Schwarz inequality}
-Given $a_i\in\R$ and $b_i>0(i=1,2,\cdots,n)$, let $y_i=\sqrt{b_i}$ and $x_i=\frac{a_i}{\sqrt{b_i}}$. Then we have an important \textbf{variant} of Cauchy-Schwarz inequality.
-\[
-(\sum_{i=1}^{n}\frac{a_i}{\sqrt{b_i}}\sqrt{b_i})^2=(\sum_{i=1}^{n}a_i)^2\le (\sum_{i=1}^{n}\frac{a_i^2}{b_i})\sum_{i=1}^{n}b_i\Longleftrightarrow {\color{red}\sum_{i=1}^{n}\frac{a_i^2}{b_i}\ge \frac{(\sum_{i=1}^{n}a_i)^2}{\sum_{i=1}^{n}b_i}}.
-\]
 
-For $a_i>0$ and $b_i>0(i=1,2,\cdots,n)$, letting $x_i=\sqrt{\frac{a_i}{b_i}}$ and $y_i=\sqrt{a_ib_i}$ gives
-\[
-\sum_{i=1}^{n}x_i^2\cdot\sum_{i=1}^{n}y_i^2\ge (\sum_{i=1}^{n}x_iy_i)^2\Longleftrightarrow \sum_{i=1}^{n}\frac{a_i}{b_i}\cdot\sum_{i=1}^{n}a_ib_i\ge (\sum_{i=1}^{n}a_i)^2\Longleftrightarrow {\color{red}\sum_{i=1}^{n}\frac{a_i}{b_i}\ge \frac{(\sum_{i=1}^{n}a_i)^2}{\sum_{i=1}^{n}a_ib_i}}.
-\]
-
-\section{Rearrangement inequalities}
-For two sequences $a_1\le a_2\le \cdots\le a_n$ and $b_1\le b_2\le \cdots\le b_n$ with reals $a_i$ and $b_i$, the following inequalities
-\[
-\underbrace{a_1b_n+a_2b_{n-1}+\cdots+a_nb_1}_{\text{reverse sum}}\le \underbrace{a_1b_{\pi(1)}+a_2b_{\pi(2)}+\cdots+a_nb_{\pi(n)}}_{\text{disordered sum}}\le \underbrace{a_1b_1+a_2b_2+\cdots+a_nb_n}_{\text{sequential sum}}
-\]
-hold, where $\pi(1),\pi(2),\ldots,\pi(n)$ is any permutation of $1,2,\ldots,n$. Simply speaking, \textbf{\textcolor[rgb]{1.00,0.00,0.00}{reverse sum $\le$ disordered sum $\le$ sequential sum}}.
-\begin{proof}\footnote{\url{https://brilliant.org/wiki/rearrangement-inequality/}}
-We want to prove that the identity permutation maximizes $a_1b_{\pi(1)}+a_2b_{\pi(2)}+\cdots+a_nb_{\pi(n)}$. Suppose for the sake of contradiction $\pi(i)$ is the smallest integer such that $\pi(i)\neq i$, then $\pi(i)=j(j>i)$ (since $1,\ldots,i-1$ have been assigned). Meanwhile, there exists a number $k>i$ such that $\pi(k)=i$ as some number must be assigned to $i$.
-
-Now, since $i<j$, it follows that $b_i\le b_j$. Likewise, since $i<k$, it follows that $a_i\le a_k$. Thus,
-\[
-(a_k-a_i)(b_j-b_i)\ge 0 \Longrightarrow a_kb_j + a_ib_i\ge a_ib_j + a_kb_i,
-\]
-which demonstrates that the sum $a_1b_{\pi(1)}+a_2b_{\pi(2)}+\cdots+a_nb_{\pi(n)}$ is not decreased by changing $\pi(j)=i$ and $\pi(k)=i$ to $\pi(i)=i$ and $\pi(k)=j$. This implies the identity permutation gives the maximum possible value of the sum $a_1b_{\pi(1)}+a_2b_{\pi(2)}+\cdots+a_nb_{\pi(n)}$, as desired. Moreover, the reverse identity permutation gives the minimum possible value of the sum $a_1b_{\pi(1)}+a_2b_{\pi(2)}+\cdots+a_nb_{\pi(n)}$.
-\end{proof}
-
-\subsection{Chebyshev's inequality}
-For two sequences $a_1\le a_2\le \cdots\le a_n$ and $b_1\le b_2\le \cdots\le b_n$ with reals $a_i$ and $b_i$, by the rearrangement inequalities, we always have the following inequalities
-\begin{gather*}
-x_1y_n+x_2y_{n-1}+\cdots+x_ny_1\le x_1y_1+x_2y_2+\cdots+x_ny_n\le x_1y_1+x_2y_2+\cdots+x_ny_n\\
-x_1y_n+x_2y_{n-1}+\cdots+x_ny_1\le x_1y_2+x_2y_3+\cdots+x_ny_1\le x_1y_1+x_2y_2+\cdots+x_ny_n\\
-x_1y_n+x_2y_{n-1}+\cdots+x_ny_1\le x_1y_3+x_2y_4+\cdots+x_ny_2\le x_1y_1+x_2y_2+\cdots+x_ny_n\\
-\cdots\\
-x_1y_n+x_2y_{n-1}+\cdots+x_ny_1\le x_1y_n+x_2y_1+\cdots+x_ny_{n-1}\le x_1y_1+x_2y_2+\cdots+x_ny_n
-\end{gather*}
-Summing up the above inequalities gives
-\begin{gather*}
-n(x_1y_n+x_2y_{n-1}+\cdots+x_ny_1)\le (x_1+x_2+\cdots+x_n)(y_1+y_2+\cdots+y_n)\le n(x_1y_1+x_2y_2+\cdots+x_ny_n)\\
-\frac{1}{n}(x_1y_n+x_2y_{n-1}+\cdots+x_ny_1)\le\frac{1}{n^2} (x_1+x_2+\cdots+x_n)(y_1+y_2+\cdots+y_n)\le \frac{1}{n}(x_1y_1+x_2y_2+\cdots+x_ny_n)\\
-\frac{1}{n}\sum_{i=1}^{n}x_iy_{n+1-i}\le \frac{1}{n}\sum_{i=1}^{n}x_i\cdot\frac{1}{n}\sum_{i=1}^{n}y_i\le \frac{1}{n}\sum_{i=1}^{n}x_iy_i
-\end{gather*}
-which is called Chebyshev's inequality.
 
 
 \section{Quadratic mean, average mean, geometric mean, and harmonic mean}
@@ -312,5 +241,98 @@ ab+bc+ca=\frac{(a+b+c)^2-(a^2+b^2+c^2)}{2}=\frac{1-(a^2+b^2+c^2)}{2}\le \frac{1-
 \]
 as desired.
 \end{proof}
+
+\section{Young inequality}
+Given $x,y>0, p,q>1$ and $1/p+1/q=1$, the inequality
+\[
+xy\le \frac{1}{p}x^p+\frac{1}{q}y^q,
+\]
+where the equality holds if and only if $x^p=y^q$.
+\begin{proof}
+Let $f(x)=e^x$, then $f''>0$. So $f$ is convex. By the Jensen's inequality,
+\begin{gather*}
+f(\frac{1}{p}\ln x^p+\frac{1}{q}\ln y^q)\le\frac{1}{p}f(\ln x^p)+\frac{1}{q}f(\ln y^q) \\
+\Downarrow\\
+e^{\frac{1}{p}\ln x^p+\frac{1}{q}\ln y^q}\le\frac{1}{p}e^{\ln x^p}+\frac{1}{q}e^{\ln y^q}
+\Longleftrightarrow e^{\frac{1}{p}\ln x^p}e^{\frac{1}{q}\ln y^q}\le\frac{1}{p}x^p+\frac{1}{q}y^q 
+\Longleftrightarrow xy\le\frac{1}{p}x^p+\frac{1}{q}y^q,
+\end{gather*}
+as desired. The equality follows from the condition for the equality of Jensen's inequality to hold with a strictly convex function. 
+\end{proof}
+
+\section{H\"{o}lder inequality}
+A classic result concerning $p$-norms is the \textbf{\textcolor[rgb]{1.00,0.00,0.00}{H\"{o}lder inequality in inner-product form}}:
+$$
+|x^T y|\le \|x\|_p\|y\|_q,\quad \frac{1}{p}+\frac{1}{q}=1.
+$$
+\begin{proof}
+Recall the definition of dual norm,
+$$
+\|x\|_p=\max_{\|z\|_q\le 1} x^Tz.
+$$
+Thus, $x^Tz\le \|x\|_p$ holds for any $z$ satisfying $\|z\|_q\le 1$, including $\|z\|_q= 1$. When $\|z\|_q= 1$, we have
+$$x^Tz\le \|x\|_p\|z\|_q$$
+Now let $z=ty$ with $t>0$. Thus, we have
+\begin{equation*}
+  x^T(ty)\le \|x\|_p\|ty\|_q \Longleftrightarrow x^Ty\le \|x\|_p\|y\|_q
+\end{equation*}
+where $\|y\|_q=\|z/t\|_q=1/t\|z\|_q=1/t>0$. This completes the proof.
+\end{proof}
+The key part of the above proof is using the dual representation of the $\ell_p$ norm, namely, $\|x\|_p=\max_{\|z\|_q\le 1} x^Tz$.
+
+\subsection{Cauchy-Schwarz inequality}
+A very important special case of H\"{o}lder inequality is \textcolor[rgb]{1.00,0.00,0.00}{\textbf{Cauchy-Schwarz inequality}}:
+$$
+|x^T y|\le \|x\|_2\|y\|_2.
+$$
+which can also be expressed as $(x^Ty)^2\le \|x\|_2^2\|y\|_2^2$. Here, $x=(x_1,x_2,\ldots,x_n)$ and $y=(y_1,y_2,\ldots,y_n)$. Thus,
+\begin{gather*}
+  (x_1y_1+x_2y_2+\ldots+x_ny_n)^2\le (x_1^2+x_2^2+\ldots+x_n^2)(y_1^2+y_2^2+\ldots+y_n^2) \\
+  (\sum_{i=1}^{n}x_iy_i)^2=\sum_{i=1}^{n}x_i^2\sum_{i=1}^{n}y_i^2
+\end{gather*}
+
+\subsection{Two variants of Cauchy-Schwarz inequality}
+Given $a_i\in\R$ and $b_i>0(i=1,2,\cdots,n)$, let $y_i=\sqrt{b_i}$ and $x_i=\frac{a_i}{\sqrt{b_i}}$. Then we have an important \textbf{variant} of Cauchy-Schwarz inequality.
+\[
+(\sum_{i=1}^{n}\frac{a_i}{\sqrt{b_i}}\sqrt{b_i})^2=(\sum_{i=1}^{n}a_i)^2\le (\sum_{i=1}^{n}\frac{a_i^2}{b_i})\sum_{i=1}^{n}b_i\Longleftrightarrow {\color{red}\sum_{i=1}^{n}\frac{a_i^2}{b_i}\ge \frac{(\sum_{i=1}^{n}a_i)^2}{\sum_{i=1}^{n}b_i}}.
+\]
+
+For $a_i>0$ and $b_i>0(i=1,2,\cdots,n)$, letting $x_i=\sqrt{\frac{a_i}{b_i}}$ and $y_i=\sqrt{a_ib_i}$ gives
+\[
+\sum_{i=1}^{n}x_i^2\cdot\sum_{i=1}^{n}y_i^2\ge (\sum_{i=1}^{n}x_iy_i)^2\Longleftrightarrow \sum_{i=1}^{n}\frac{a_i}{b_i}\cdot\sum_{i=1}^{n}a_ib_i\ge (\sum_{i=1}^{n}a_i)^2\Longleftrightarrow {\color{red}\sum_{i=1}^{n}\frac{a_i}{b_i}\ge \frac{(\sum_{i=1}^{n}a_i)^2}{\sum_{i=1}^{n}a_ib_i}}.
+\]
+
+\section{Rearrangement inequalities}
+For two sequences $a_1\le a_2\le \cdots\le a_n$ and $b_1\le b_2\le \cdots\le b_n$ with reals $a_i$ and $b_i$, the following inequalities
+\[
+\underbrace{a_1b_n+a_2b_{n-1}+\cdots+a_nb_1}_{\text{reverse sum}}\le \underbrace{a_1b_{\pi(1)}+a_2b_{\pi(2)}+\cdots+a_nb_{\pi(n)}}_{\text{disordered sum}}\le \underbrace{a_1b_1+a_2b_2+\cdots+a_nb_n}_{\text{sequential sum}}
+\]
+hold, where $\pi(1),\pi(2),\ldots,\pi(n)$ is any permutation of $1,2,\ldots,n$. Simply speaking, \textbf{\textcolor[rgb]{1.00,0.00,0.00}{reverse sum $\le$ disordered sum $\le$ sequential sum}}.
+\begin{proof}\footnote{\url{https://brilliant.org/wiki/rearrangement-inequality/}}
+We want to prove that the identity permutation maximizes $a_1b_{\pi(1)}+a_2b_{\pi(2)}+\cdots+a_nb_{\pi(n)}$. Suppose for the sake of contradiction $\pi(i)$ is the smallest integer such that $\pi(i)\neq i$, then $\pi(i)=j(j>i)$ (since $1,\ldots,i-1$ have been assigned). Meanwhile, there exists a number $k>i$ such that $\pi(k)=i$ as some number must be assigned to $i$.
+
+Now, since $i<j$, it follows that $b_i\le b_j$. Likewise, since $i<k$, it follows that $a_i\le a_k$. Thus,
+\[
+(a_k-a_i)(b_j-b_i)\ge 0 \Longrightarrow a_kb_j + a_ib_i\ge a_ib_j + a_kb_i,
+\]
+which demonstrates that the sum $a_1b_{\pi(1)}+a_2b_{\pi(2)}+\cdots+a_nb_{\pi(n)}$ is not decreased by changing $\pi(j)=i$ and $\pi(k)=i$ to $\pi(i)=i$ and $\pi(k)=j$. This implies the identity permutation gives the maximum possible value of the sum $a_1b_{\pi(1)}+a_2b_{\pi(2)}+\cdots+a_nb_{\pi(n)}$, as desired. Moreover, the reverse identity permutation gives the minimum possible value of the sum $a_1b_{\pi(1)}+a_2b_{\pi(2)}+\cdots+a_nb_{\pi(n)}$.
+\end{proof}
+
+\subsection{Chebyshev's inequality}
+For two sequences $a_1\le a_2\le \cdots\le a_n$ and $b_1\le b_2\le \cdots\le b_n$ with reals $a_i$ and $b_i$, by the rearrangement inequalities, we always have the following inequalities
+\begin{gather*}
+x_1y_n+x_2y_{n-1}+\cdots+x_ny_1\le x_1y_1+x_2y_2+\cdots+x_ny_n\le x_1y_1+x_2y_2+\cdots+x_ny_n\\
+x_1y_n+x_2y_{n-1}+\cdots+x_ny_1\le x_1y_2+x_2y_3+\cdots+x_ny_1\le x_1y_1+x_2y_2+\cdots+x_ny_n\\
+x_1y_n+x_2y_{n-1}+\cdots+x_ny_1\le x_1y_3+x_2y_4+\cdots+x_ny_2\le x_1y_1+x_2y_2+\cdots+x_ny_n\\
+\cdots\\
+x_1y_n+x_2y_{n-1}+\cdots+x_ny_1\le x_1y_n+x_2y_1+\cdots+x_ny_{n-1}\le x_1y_1+x_2y_2+\cdots+x_ny_n
+\end{gather*}
+Summing up the above inequalities gives
+\begin{gather*}
+n(x_1y_n+x_2y_{n-1}+\cdots+x_ny_1)\le (x_1+x_2+\cdots+x_n)(y_1+y_2+\cdots+y_n)\le n(x_1y_1+x_2y_2+\cdots+x_ny_n)\\
+\frac{1}{n}(x_1y_n+x_2y_{n-1}+\cdots+x_ny_1)\le\frac{1}{n^2} (x_1+x_2+\cdots+x_n)(y_1+y_2+\cdots+y_n)\le \frac{1}{n}(x_1y_1+x_2y_2+\cdots+x_ny_n)\\
+\frac{1}{n}\sum_{i=1}^{n}x_iy_{n+1-i}\le \frac{1}{n}\sum_{i=1}^{n}x_i\cdot\frac{1}{n}\sum_{i=1}^{n}y_i\le \frac{1}{n}\sum_{i=1}^{n}x_iy_i
+\end{gather*}
+which is called Chebyshev's inequality.
 
 \end{document} 
