@@ -1,7 +1,7 @@
 ---
 layout: post
-title: How can we use Tiny Imagenet dataset in Pytorch?
-description: This is my notes for recording how to use Tiny Imagenet dataset in Pytorch.
+title: How can we use Tiny ImageNet dataset in Pytorch?
+description: This is my notes for recording how to use Tiny ImageNet dataset in Pytorch.
 date: 2022-05-19
 ---
 
