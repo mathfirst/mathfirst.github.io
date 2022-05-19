@@ -37,3 +37,5 @@ We will use [torchvision.datasets.ImageFolder](http://pytorch.org/vision/main/ge
 > root/cat/123.png
 > root/cat/nsdf3.png
 > root/cat/[...]/asd932_.png
+
+Each folder contains the images with the same label. It is clear that training data is already well organized.
