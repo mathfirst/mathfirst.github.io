@@ -28,6 +28,8 @@ Although I only ran the above on Windows 10, I believe that this command works o
 - **wnids.txt**: list of the ids used in Tiny ImageNet from the original full set of ImageNet[^1]
 - **words.txt**: description of all ids of ImageNet
 
+[^1]: [https://www.kaggle.com/competitions/tiny-imagenet/data](https://www.kaggle.com/competitions/tiny-imagenet/data)
+
 ### Pytorch dataset format
 We will use [torchvision.datasets.ImageFolder](http://pytorch.org/vision/main/generated/torchvision.datasets.ImageFolder.html) whose format is
 > root/dog/xxx.png
@@ -82,4 +84,3 @@ exit()
 
 I referenced [this file](https://github.com/tjmoon0104/pytorch-tiny-imagenet/blob/master/val_format.py) when I wrote the code.
 
-[^1]: [https://www.kaggle.com/competitions/tiny-imagenet/data](https://www.kaggle.com/competitions/tiny-imagenet/data)
