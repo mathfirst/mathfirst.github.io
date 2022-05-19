@@ -23,6 +23,8 @@
 \usepackage[nottoc]{tocbibind}
 \usepackage{lineno}
 \linenumbers
+\usepackage{tikz}
+\usetikzlibrary{matrix}
 \usepackage{hyperref}
 \hypersetup{
     colorlinks=true, %set true if you want colored links
@@ -42,6 +44,7 @@
 
 \theoremstyle{remark}
 \newtheorem{remark}[thm]{Remark}
+\newtheorem{example}[thm]{Example}
 %\theoremstyle{definition}
 %\newtheorem{definition}{Definition}
 \newtheorem*{note}{Note}
@@ -53,7 +56,9 @@
 \newcommand{\maximize}{\mathop{\mathrm{maximize}}}
 \newcommand{\st}{\mathop{\mathrm{subject\,\,to}}}
 \newenvironment{solution}{\paragraph{Solution:}}{\hfill$\square$}
-\newenvironment{example}{\paragraph{Example:}}{\hfill$\square$}
+%\newenvironment{example}{\paragraph{Example:}}{\hfill$\square$}
+
+\newcommand\tikznode[2]{\tikz[remember picture,baseline=(#1.base)]{\node(#1)[inner sep=0pt]{#2};}}
 
 \def\R{\mathbf{R}}
 \def\E{\mathbf{E}}
@@ -98,12 +103,153 @@ where $\alpha$ is a nonzero real number. Note that in combinatorics $\alpha$ is 
 \subsection{Elementary functions}
 
 
-\section{Products of series}
-\subsection{Square product}
 
-\subsection{Cauchy product}
 
 \section{Alternating series (Leibniz series)}
+
+\section{The product of two infinite series}
+The product of two convergent series $\sum_{n=1}^{\infty}a_n$ and $\sum_{n=1}^{\infty}b_n$ is the sum of all the terms $a_ib_j(i=1,2,\cdots; j=1,2,\cdots)$. These terms can be arranged in the form of an infinite matrix as follows.
+\begin{equation*}
+\begin{matrix}
+  a_1b_1 & a_1b_2 & a_1b_3 & a_1b_4 & \cdots\\
+  a_2b_1 & a_2b_2 & a_2b_3 & a_2b_4 & \cdots\\
+  a_3b_1 & a_3b_2 & a_3b_3 & a_3b_4 & \cdots\\
+  a_4b_1 & a_4b_2 & a_4b_3 & a_4b_4 & \cdots\\
+  \cdots & \cdots & \cdots & \cdots & \cdots
+\end{matrix}
+\end{equation*}
+Since the laws of associativity and commutativity do not hold for series, the way how these terms are arranged matters. Two common arrangements are square arrangement and diagonal arrangement. They give two kinds of products of infinite series, i.e., square product and Cauchy product, respectively.
+
+\subsection{Square product}
+We introduce the square product via the following infinite matrix which consists of infinite many squares.
+\[
+\begin{matrix}
+ & | & | & | & | & \\
+\tikznode{r2c1}{$\cdot$} &\tikznode{r2c2}{$a_1b_1$}  & a_1b_2 & a_1b_3 & a_1b_4 & \cdots\\
+ & & | & | & | & \\
+\tikznode{r4c1}{$\cdot$} & \tikznode{r4c2}{$a_2b_1$} & \tikznode{r4c3}{$a_2b_2$} & a_2b_3 & a_2b_4 & \cdots\\
+ & &  & | & | & \\
+\tikznode{r6c1}{$\cdot$} & \tikznode{r6c2}{$a_3b_1$} & \tikznode{r6c3}{$a_3b_2$} & \tikznode{r6c4}{$a_3b_3$} & a_3b_4 & \cdots\\
+ & &  &  & | & \\
+\tikznode{r8c1}{$\cdot$} &\tikznode{r8c2}{$a_4b_1$}&\tikznode{r8c3}{$a_4b_2$}&\tikznode{r8c4}{$a_4b_3$}&\tikznode{r8c5}{$a_4b_4$}& \cdots\\
+ & \cdots & \cdots & \cdots & \cdots & \cdots
+\end{matrix}
+\]
+\tikz[overlay,remember picture]{\draw[<-](r2c1)--(r2c2);\draw[<-](r4c1)--(r4c2);\draw[<-](r8c1)--(r8c2);\draw[<-](r6c1)--(r6c2);
+\draw[-](r4c2)--(r4c3);\draw[-](r6c2)--(r6c3);\draw[-](r6c3)--(r6c4);
+\draw[-](r8c2)--(r8c3);\draw[-](r8c4)--(r8c5);\draw[-](r8c3)--(r8c4);}
+Let 
+\begin{align*}
+ &d_1=a_1b_1, \\
+ &d_2=a_1b_2+a_2b_2+a_2b_1,\\
+ &\cdots\cdots\\
+ &d_n=a_1b_n+a_2b_n+\cdots+a_nb_n+a_nb_{n-1}+\cdots+a_2b_1,\\
+ &\cdots\cdots
+\end{align*}
+then $\sum_{n=1}^{\infty}$ is the product of $\sum_{n=1}^{\infty}a_n$ and $\sum_{n=1}^{\infty}b_n$ through the above square arrangement. We call it \textbf{square product}.
+\begin{thm}[Square arrangement of the product of two convergent series generates a convergent series]
+Given two infinite series $\sum_{n=1}^{\infty}a_n$ and $\sum_{n=1}^{\infty}b_n$, the product of $\sum_{n=1}^{\infty}a_n$ and $\sum_{n=1}^{\infty}b_n$ obtained through a square arrangement is convergent if both $\sum_{n=1}^{\infty}a_n$ and $\sum_{n=1}^{\infty}b_n$ are convergent and the following
+\[
+\sum_{n=1}^{\infty}d_n=\left(\sum_{n=1}^{\infty}a_n\right)\left(\sum_{n=1}^{\infty}b_n\right)
+\]
+\end{thm}
+\begin{proof}
+From the definition of the square arrangement, we get that the partial sum
+\[
+\sum_{n=1}^{N}d_n=\left(\sum_{n=1}^{N}a_n\right)\left(\sum_{n=1}^{N}b_n\right)
+\]
+always hold. Since both of $\sum_{n=1}^{\infty}a_n$ and $\sum_{n=1}^{\infty}b_n$ converge, we can take $N\to \infty$ on both sides, which gives
+\[
+\sum_{n=1}^{\infty}d_n=\left(\sum_{n=1}^{\infty}a_n\right)\left(\sum_{n=1}^{\infty}b_n\right),
+\]
+as desired.
+
+\end{proof}
+\begin{note}
+We could not prove the above claim by analyzing $d_n$. Specifically, $d_n$ can be expressed as
+\[
+d_n=\left(\sum_{i=1}^{n}a_i\right)b_n+a_n\left(\sum_{i=1}^{n-1}b_i\right)
+\]
+Let $s_n=\alpha_n b_n$ with $\alpha_n=\sum_{i=1}^{n}a_i$ and $t_n=a_n\beta_n$ with $\beta_n=\sum_{i=1}^{n-1}b_i$, then $d_n=s_n+t_n$. You may observe that $\alpha_n$ is bounded since $\sum_{n=1}^{\infty}a_n$ converges. Moreover, $\sum_{n=1}^{\infty}b_n$ is convergent. You may think of Abel's test which is a method of testing for convergence of $\sum_{n=1}^{\infty}x_ny_n$. However, Abel's test requires the monotonicity and boundedness of $\alpha_n$ which corresponds to $x_n$. It is clear that $\alpha_n$ is bounded but not necessarily monotone. Although $\sum_{n=1}^{\infty}b_n$ which corresponds to $\sum_{n=1}^{\infty}y_n$ converge, we could not conclude that $\sum_{n=1}^{\infty}d_n$ converges.
+\end{note}
+
+\subsubsection{A sufficient condition for the convergence of the product of two infinite series}
+\begin{thm}
+If $\sum_{n=1}^{\infty}a_n$ and $\sum_{n=1}^{\infty}b_n$ are both absolutely convergent, then the series given by the sum of $a_ib_j$ over all $i$ and $j>0$ in any arrangement method also absolutely converge. Its sum is equal to
+\[
+\left(\sum_{n=1}^{\infty}a_n\right)\left(\sum_{n=1}^{\infty}b_n\right).
+\]
+\end{thm}
+\begin{proof}
+For an arbitrary $n$, $a_{i_k}b_{j_k}(k=1,2,\cdots)$ is an arbitrary arrangement of $a_{i}b_{j}(i=1,2,\cdots;j=1,2,\cdots)$. Let
+\[
+N=\max_{1\le k\le n}\{i_k,j_k\},
+\]
+so 
+\[
+\sum_{k=1}^{n}|a_{i_k}b_{j_k}|\le \sum_{i=1}^{N}|a_{i}|\cdot\sum_{j=1}^{N}|b_{j}|\le  \sum_{i=1}^{\infty}|a_{i}|\cdot\sum_{j=1}^{\infty}|b_{j}|,
+\]
+which implies that $\sum_{k=1}^{\infty}a_{i_k}b_{j_k}$ absolutely converge. Since all permutations of an absolutely convergent real series converge to the same value, we denote by $\sum_{n=1}^{\infty}d_n$ the product of $\sum_{n=1}^{\infty}a_n$ and $\sum_{n=1}^{\infty}b_n$ via square arrangement. Then $\sum_{n=1}^{\infty}d_n$ is the series that is obtained by permuting and associating the terms of $\sum_{k=1}^{n}a_{i_k}b_{j_k}$. Thus, we have
+\[
+\sum_{k=1}^{n}a_{i_k}b_{j_k}=\sum_{n=1}^{\infty}d_n=\left(\sum_{n=1}^{\infty}a_n\right)\left(\sum_{n=1}^{\infty}b_n\right).
+\]
+This completes our proof.
+\end{proof}
+
+
+\subsection{Cauchy product}
+We use the following matrix to illustrate the diagonal arrangement of the aforementioned infinite matrix.
+\[
+\begin{matrix}
+ &  & \tikznode{r1c3}{} &\tikznode{r1c4}{}  &\tikznode{r1c5}{}  &\tikznode{r1c6}{} \\
+ &  &  &  &  & \\
+&\tikznode{r2c2}{$a_1b_1$}  & \tikznode{r2c3}{$a_1b_2$} & \tikznode{r2c4}{$a_1b_3$} & \tikznode{r2c5}{$a_1b_4$} & \cdots\\
+ & &  & &  & \\
+& \tikznode{r4c2}{$a_2b_1$} & \tikznode{r4c3}{$a_2b_2$} & \tikznode{r4c4}{$a_2b_3$} & a_2b_4 & \cdots\\
+ & &  &  &  & \\
+& \tikznode{r6c2}{$a_3b_1$} & \tikznode{r6c3}{$a_3b_2$} & \tikznode{r6c4}{$a_3b_3$} & a_3b_4 & \cdots\\
+ & &  &  &  & \\
+&\tikznode{r8c2}{$a_4b_1$}&\tikznode{r8c3}{$a_4b_2$}&\tikznode{r8c4}{$a_4b_3$}&\tikznode{r8c5}{$a_4b_4$}& \cdots\\
+ &  &  &  &  & \\
+ & \cdots & \cdots & \cdots & \cdots & \cdots
+\end{matrix}
+\]
+\tikz[overlay,remember picture]{\draw[-](r1c3)--(r2c2);\draw[-](r2c3)--(r4c2);\draw[-](r2c3)--(r1c4);
+\draw[-](r1c5)--(r2c4);\draw[-](r1c6)--(r2c5);\draw[-](r2c4)--(r4c3);\draw[-](r6c2)--(r4c3);
+\draw[-](r2c5)--(r4c4);\draw[-](r4c4)--(r6c3);\draw[-](r8c2)--(r6c3);}
+Let
+\begin{align*}
+ &c_1=a_1b_1, \\
+ &c_2=a_1b_2+a_2b_1,\\
+ &\cdots\cdots\\
+ &c_n=\sum_{i+j=n+1}a_ib_j=a_1b_n+a_2b_{n-1}+\cdots+a_nb_1,\\
+ &\cdots\cdots
+\end{align*}
+then we call 
+\[
+\sum_{n=1}^{\infty}c_n=\sum_{n=1}^{\infty}(a_1b_n+a_2b_{n-1}+\cdots+a_nb_1)
+\]
+\textbf{Cauchy product} of $\sum_{n=1}^{\infty}a_n$ and $\sum_{n=1}^{\infty}b_n$.
+
+\subsubsection{Convergence of Cauchy product}
+The convergence of $\sum_{n=1}^{\infty}a_n$ and $\sum_{n=1}^{\infty}b_n$ is not sufficient for the convergence of Cauchy product. Let's look at the following example.
+\begin{example}
+Given $\sum_{n=1}^{\infty}a_n=\sum_{n=1}^{\infty}b_n=\sum_{n=1}^{\infty}\frac{(-1)^{n+1}}{\sqrt{n}}$, both series are (conditionally) convergent. The terms of their Cauchy product are given by
+\[
+c_n=\sum_{i+j=n+1}a_ib_j=\sum_{i+j=n+1}\frac{(-1)^{i+1}}{\sqrt{i}}\frac{(-1)^{j+1}}{\sqrt{j}}=(-1)^{n+1}\sum_{i+j=n+1}\frac{1}{\sqrt{ij}}.
+\]
+By the AGM inequality,
+\[
+\sqrt{ij}\le \frac{i+j}{2}=\frac{n+1}{2}\Longleftrightarrow \frac{1}{\sqrt{ij}}\ge \frac{2}{n+1},
+\]
+since each $c_n$ contains $n$ terms, then
+\[
+|c_n|\ge n\cdot\frac{2}{n+1},
+\]
+which implies that $c_n\nrightarrow 0$. Thus, the Cauchy product $\sum_{n=1}^{\infty}c_n$ diverges.
+\end{example}
+
+
 
 \section{Taylor expansions of some elementary functions}
 Note that when we are talking about Taylor expansion of $f(x)$ at $x_0$, we definitely have $f(x)=\sum_{n=0}^{\infty}\frac{f^{n}(x_0)}{n!} (x-x_0)^n$ on $O(x_0,\rho)(0<\rho\le r)$ where $r$ is the radius of convergence of Taylor series of $f(x)$. When $x$ is not in the region of convergence, the equality does not hold.
