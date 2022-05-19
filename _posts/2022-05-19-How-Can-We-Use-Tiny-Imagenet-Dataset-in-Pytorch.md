@@ -14,9 +14,7 @@ Imagenet is a famous large-scale dataset, but it has been not publicly available
 
 First you can download Tiny Imagenet dataset by right clicking http://cs231n.stanford.edu/tiny-imagenet-200.zip and chosing "save as". Its size is about 236MB. Then you can save this data file on your computer. After that, you can unzip it using a software or the command
 
-`unzip tiny-imagenet-200.zip`.
-
-
+`unzip tiny-imagenet-200.zip`
 
 Although I only ran the above on Windows 10, I believe that this command works on both Windows 10 and Linux. Based on my own experience, using a software to unzip the data file is much faster than running the command with cmd on Windows 10. By the way, normally when you open the Command Prompt on Windows, the default path is C drive. But we usually do not work on C drive, we can go to D drive by entering `D:` followed by pressing Enter key, see [this](https://www.minitool.com/news/how-to-open-drive-in-cmd.html) for more info. 
 
@@ -31,3 +29,11 @@ Although I only ran the above on Windows 10, I believe that this command works o
 - **words.txt**: description of all ids of ImageNet
 
 ### Pytorch dataset format
+We will use [torchvision.datasets.ImageFolder](http://pytorch.org/vision/main/generated/torchvision.datasets.ImageFolder.html) whose format is
+> root/dog/xxx.png
+> root/dog/xxy.png
+> root/dog/[...]/xxz.png
+
+> root/cat/123.png
+> root/cat/nsdf3.png
+> root/cat/[...]/asd932_.png
