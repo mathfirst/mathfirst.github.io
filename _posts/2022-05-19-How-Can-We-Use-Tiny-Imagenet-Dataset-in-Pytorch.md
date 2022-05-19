@@ -30,12 +30,8 @@ Although I only ran the above on Windows 10, I believe that this command works o
 
 ### Pytorch dataset format
 We will use [torchvision.datasets.ImageFolder](http://pytorch.org/vision/main/generated/torchvision.datasets.ImageFolder.html) whose format is
-> root/dog/xxx.png
-> root/dog/xxy.png
-> root/dog/[...]/xxz.png
+> root/dog/xxx.png  root/dog/xxy.png  root/dog/[...]/xxz.png
 
-> root/cat/123.png
-> root/cat/nsdf3.png
-> root/cat/[...]/asd932_.png
+> root/cat/123.png  root/cat/nsdf3.png  root/cat/[...]/asd932_.png
 
 Each folder contains the images with the same label. It is clear that training data is already well organized.
