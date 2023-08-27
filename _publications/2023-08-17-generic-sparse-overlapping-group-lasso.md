@@ -1,5 +1,5 @@
 ---
-title: "An ADMM Algorithm for a Generic $\ell_0$ Sparse Overlapping Group Lasso Problem"
+title: "An ADMM Algorithm for a Generic $l_0$ Sparse Overlapping Group Lasso Problem"
 collection: publications
 permalink: /publication/2023-08-17-generic-sparse-overlapping-group-lasso
 # excerpt: 'This paper is about the number 2. The number 3 is left for future work.'
