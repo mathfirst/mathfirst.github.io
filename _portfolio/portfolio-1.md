@@ -1,6 +1,6 @@
 ---
-title: "Portfolio item number 1"
-excerpt: "My notes on optimization theory<br/><img src='/files/OptimizationTheory.pdf'>"
+title: "Optimization"
+excerpt: "My notes on optimization theory<br/>[inequalities](src='/files/OptimizationTheory.pdf')"
 collection: portfolio
 ---
 
