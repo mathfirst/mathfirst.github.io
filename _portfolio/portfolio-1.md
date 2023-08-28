@@ -1,6 +1,6 @@
 ---
 title: "Optimization"
-excerpt: "My notes on optimization theory<br/>[inequalities](src='/files/OptimizationTheory.pdf')"
+excerpt: "My notes on optimization theory<br/>[Optimization](src='/files/OptimizationTheory.pdf')"
 collection: portfolio
 ---
 
