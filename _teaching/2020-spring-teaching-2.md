@@ -1,7 +1,7 @@
 ---
 title: "TA experience 2"
 collection: teaching
-type: "Graduate"
+type: "Graduate course"
 permalink: /teaching/2020-spring-teaching-1
 venue: "Department of Intelligent System Engineering, Indiana University"
 date: 2020-01-05
