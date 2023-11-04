@@ -7,7 +7,13 @@ redirect_from:
   - /markdown.html
 ---
 
-## Locations of key files/directories
+## Books on optimization theory
+I recommend the following books for people who want to learn optimization:
+* Introduction to Nonlinear Optimization: Theory, Algorithms and Applications with MATLAB by Amir Beck
+* First Order Methods in Optimization by Amir Beck
+* Convex Optimization by Stephen Boyd & Lieven Vandenberghe
+I also recommend Dr. Ryan Tibshirani's [Convex Optimization](https://www.stat.cmu.edu/~ryantibs/convexopt/) course. You can find his lecture videos on YouTube and lecture notes on his website where you can also find the course assignments.
+<!-- ## Locations of key files/directories
 
 * Basic config options: _config.yml
 * Top navigation bar config: _data/navigation.yml
@@ -199,4 +205,4 @@ Still sticking with science and Isaac Newton's E = MC<sup>2</sup>, which should 
 
 ### Variable Tag
 
-This allows you to denote <var>variables</var>.
+This allows you to denote <var>variables</var>. -->
