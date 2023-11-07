@@ -4,7 +4,7 @@ collection: publications
 permalink: /publication/2023-08-17-generic-sparse-overlapping-group-lasso
 # excerpt: 'This paper is about the number 2. The number 3 is left for future work.'
 date: 2023-08-17
-venue: 'viXra'
+venue: 'arxiv'
 paperurl: 'http://arxiv.org/abs/2310.19012'
 # citation: 'Your Name, You. (2010). &quot;Paper Title Number 2.&quot; <i>Journal 1</i>. 1(2).'
 ---
