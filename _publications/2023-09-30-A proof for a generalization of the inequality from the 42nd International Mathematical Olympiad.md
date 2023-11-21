@@ -10,8 +10,11 @@ paperurl: 'http://viXra.org/abs/2311.0007'
 ---
 In this paper, we present a proof for a generalization of the inequality from the 42nd International Mathematical Olympiad. The proved inequality relates to a sum involving square roots of fractions. 
 
-[Download paper here](http://viXra.org/abs/2311.0007)
+Credit: Thank Ruihan Guo for proofreading the manuscript.
 
 Recommended citation: Youming Zhao. (2023). "A proof for a generalization of the inequality from the 42nd International Mathematical Olympiad." <i>Current Research in Statistics and Mathematics</i>.
 
-Credit: Thank Ruihan Guo for proofreading the manuscript.
+
+
+[Download paper here](http://viXra.org/abs/2311.0007)
+
