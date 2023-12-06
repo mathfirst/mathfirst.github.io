@@ -15,6 +15,11 @@ I recommend the following books for people who want to learn optimization:
 
 I also recommend Dr. Ryan Tibshirani's [Convex Optimization](https://www.stat.cmu.edu/~ryantibs/convexopt/) course. You can find his lecture videos on YouTube and lecture notes on his website where you can also find the course assignments.
 
+## Fourier series
+This is [my notes on Fourier Series](/files/Notes_on_Fourier_Series.pdf) I made when I was self-studying Fourier Series. 
+Fourier Series is a powerful tool for finding out the analytic expressions of infinite series. 
+I keep updating my notes when I find something interesting or useful, in my view, about Fourier 
+series. One of my final goals is to find out the closed form of [Apery's constant](https://en.wikipedia.org/wiki/Ap%C3%A9ry%27s_constant). 
 
 <!-- ## Locations of key files/directories
 
