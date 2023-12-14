@@ -21,6 +21,9 @@ Fourier Series is a powerful tool for finding out the analytic expressions of in
 I keep updating my notes when I find something interesting or useful, in my view, about Fourier 
 series. One of my final goals is to find out the closed form of [Apery's constant](https://en.wikipedia.org/wiki/Ap%C3%A9ry%27s_constant). 
 
+## Real analysis
+[Notes on real analysis](/files/real_analysis.pdf). The main references are Terence Tao's Analysis I and Analysis II, and Jixiu Chen, et al's Mathematical Analysis. 
+
 <!-- ## Locations of key files/directories
 
 * Basic config options: _config.yml
