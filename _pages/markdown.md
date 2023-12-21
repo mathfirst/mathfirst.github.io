@@ -24,6 +24,9 @@ series. One of my final goals is to find out the closed form of [Apery's constan
 ## Real analysis
 [Notes on real analysis](/files/real_analysis.pdf). The main references are Terence Tao's Analysis I and Analysis II, and Jixiu Chen, et al's Mathematical Analysis. 
 
+## Exploration on Apery's constant
+I am very interested in the research on Apery's constant. I did some research on this problem and my notes are available [here](/files/My_work_on_Apery_constant.pdf).
+
 <!-- ## Locations of key files/directories
 
 * Basic config options: _config.yml
