@@ -8,7 +8,7 @@ redirect_from:
   - /about.html
 ---
 
-Currently, I am an independent researcher. My research interests include optimization theory, statistical machine learning and their applications in bioinformatics. Recently, I found CUDA programming interesting.
+Currently, I am an independent researcher. My research interests include optimization theory, statistical machine learning and their applications in bioinformatics. 
 
 My research experience has been really winding. In 2018, I went to the US for my PhD career. From 2019 to 2021, I was a PhD student of Indiana University, at Bloomington. At IU, it was my honor to follow [Roni Khardon](https://cgi.luddy.indiana.edu/~rkhardon/) for a short while and then [Yijie Wang](https://wyjhxq.github.io/) as my PhD advisor. Because of the trade war between the US and China, I had to go back to China and became an independent researcher. Prior to studying in the US, I had been working on my PhD for almost 3 years in China. 
 
