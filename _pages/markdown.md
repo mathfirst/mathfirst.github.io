@@ -10,7 +10,7 @@ redirect_from:
 ## Courses
 I have taken/been taking some math courses via Coursera, edX, etc.
 * [Optimization: principles and algorithms - Linear optimization](https://www.edx.org/learn/math/ecole-polytechnique-federale-de-lausanne-optimization-principles-and-algorithms-linear-optimization) ([Certificate](/files/EPFLx%20optimizationX-1%20Certificate%20_%20edX.pdf))
-* [Differential Equations Part I Basic Theory](https://www.coursera.org/learn/ordinary-differential-equations) (ongoing)
+* [Differential Equations Part I Basic Theory](https://www.coursera.org/learn/ordinary-differential-equations) ([Certificate](https://coursera.org/share/b9d2bd6807a737b2c3889f13e1e4bb5d))
 * [Introduction to Complex Analysis](https://www.coursera.org/learn/complex-analysis) (ongoing)
 * [Mathematical and Computational Methods](https://www.edx.org/learn/math/georgetown-university-mathematical-and-computational-methods) (ongoing)
 * [Introduction to optimization on smooth manifolds: first order methods](https://www.edx.org/learn/math/ecole-polytechnique-federale-de-lausanne-introduction-to-optimization-on-smooth-manifolds-first-order-methods) (ongoing)
