@@ -14,6 +14,7 @@ I have taken/been taking some math courses via Coursera, edX, etc.
 * [Introduction to Complex Analysis](https://www.coursera.org/learn/complex-analysis) ([Certificate](https://coursera.org/share/b9c8ec0aaa6532736c7b6ef5321a8d6c))
 * [Differential Equations Part II Series Solutions](https://www.coursera.org/learn/introduction-to-ordinary-differential-equations-part-2) ([Certificate](https://coursera.org/share/f29cc17973fe5edb5074e853cfa847cb)) 
 * [Differential Equations Part III Systems of Equations](https://www.coursera.org/learn/differential-equations-part-iii-systems-of-equations) ([Certificate](https://coursera.org/share/fca2aeaa76e104b5a6c09436a8ba62fa))
+* [Introduction to Mathematical Thinking](https://www.coursera.org/learn/mathematical-thinking) ([Certificate](https://coursera.org/share/c95c58ba49d6ee4eea92d2904ba30086))
 * [Mathematical and Computational Methods](https://www.edx.org/learn/math/georgetown-university-mathematical-and-computational-methods) (ongoing)
 * [Introduction to optimization on smooth manifolds: first order methods](https://www.edx.org/learn/math/ecole-polytechnique-federale-de-lausanne-introduction-to-optimization-on-smooth-manifolds-first-order-methods) (ongoing)
 
