@@ -7,6 +7,10 @@ redirect_from:
   - /markdown.html
 ---
 
+## My solutions to some online self-assessment documents for M.Sc. Mathematics Program
+### University of Potsdam's self-assessment document is available at [here](https://www.math.uni-potsdam.de/fileadmin/user_upload/images/Dateien/Self-assessment.pdf). My answers to those questions are available at [here](/files/self_assessment_on_math_knowledge1.pdf).
+
+
 ## Courses
 I have taken/been taking some math courses via Coursera, edX, etc.
 * [Optimization: principles and algorithms - Linear optimization](https://www.edx.org/learn/math/ecole-polytechnique-federale-de-lausanne-optimization-principles-and-algorithms-linear-optimization) ([Certificate](/files/EPFLx%20optimizationX-1%20Certificate%20_%20edX.pdf))
@@ -17,6 +21,7 @@ I have taken/been taking some math courses via Coursera, edX, etc.
 * [Introduction to Mathematical Thinking](https://www.coursera.org/learn/mathematical-thinking) ([Certificate](https://coursera.org/share/c95c58ba49d6ee4eea92d2904ba30086))
 * [Mathematical and Computational Methods](https://www.edx.org/learn/math/georgetown-university-mathematical-and-computational-methods) (ongoing)
 * [Introduction to optimization on smooth manifolds: first order methods](https://www.edx.org/learn/math/ecole-polytechnique-federale-de-lausanne-introduction-to-optimization-on-smooth-manifolds-first-order-methods) (ongoing)
+
 
 
 ## Books on optimization theory
