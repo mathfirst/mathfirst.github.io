@@ -13,6 +13,7 @@ redirect_from:
 ### TU Darmstadt provides [online self-assessment questions](https://www2.mathematik.tu-darmstadt.de/~eickmeyer/OSA/OSA.html). My answers to those questions are as follows.
 #### [Real analysis](/files/self_assessment_on_real_analysis.pdf)
 #### [Linear algebra](/files/self_assessment_on_linear_algebra.pdf)
+#### [Complex analysis](/files/self_assessment_on_complex_analysis.pdf)
 
 
 
