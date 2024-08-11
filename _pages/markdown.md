@@ -14,6 +14,7 @@ redirect_from:
 #### [Real analysis](/files/self_assessment_on_real_analysis.pdf)
 #### [Linear algebra](/files/self_assessment_on_linear_algebra.pdf)
 #### [Complex analysis](/files/self_assessment_on_complex_analysis.pdf)
+#### [Ordinary differential equations](/files/self_assessment_on_complex_analysis.pdf)
 
 
 
